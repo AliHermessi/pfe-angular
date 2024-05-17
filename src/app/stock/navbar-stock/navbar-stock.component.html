@@ -1,0 +1,46 @@
+
+<div class="top_navbar" >
+  <div class="logo">Foolish Dev</div>
+  <div class="menu">
+    
+
+  </div>
+</div>
+
+<div class="sidebar">
+  <a class="nav-link" (click)="toggleNav('home')" [class.active]="activeTab === 'home'">Home</a>  
+
+ 
+  <a class="nav-link" (click)="activeTab === 'Produit'"  [class.active]="activeTab === 'Produit'">Produit</a>
+  <div *ngIf="activeTab === 'Produit'">
+      <a class="sub-nav-link" (click)="toggleNav('add-produit')">Ajouter Produits</a>
+      <a class="sub-nav-link" (click)="toggleNav('list-produit')">Voir Liste de Produit</a>
+  </div>
+
+  <a class="nav-link" (click)="toggleNav('Commande')" [class.active]="activeTab === 'Commande'">Commande</a>
+  <div *ngIf="activeTab === 'Commande'">
+      <a class="sub-nav-link"(click)="toggleNav('list-commande')">Voir Liste de Commande</a>
+      <a class="sub-nav-link" (click)="toggleNav('add-commande')">Creer Commande</a>
+  </div>
+
+
+  <a class="nav-link" (click)="toggleNav('Fournisseur')" [class.active]="activeTab === 'Fournisseur'">Fournisseur</a>
+  
+
+  <a class="nav-link" (click)="toggleNav('Categorie')" [class.active]="activeTab === 'Categorie'">Categorie</a>
+  
+ 
+  <a class="nav-link" (click)="toggleNav('Client')" [class.active]="activeTab === 'Client'">Client</a>
+  
+
+  <a class="nav-link" (click)="toggleNav('Notification')" [class.active]="activeTab === 'Notification'">Notifications</a>
+  
+
+  <a class="nav-link" (click)="toggleNav('Contacter Admin')" [class.active]="activeTab === 'Contacter Admin'">Contacter Admin</a>
+  
+
+  <a class="nav-link logout-link" (click)="logout()">Logout</a>
+</div>
+
+
+  

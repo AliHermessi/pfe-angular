@@ -1,0 +1,91 @@
+<div class="container" style="width: 80%; margin: auto;">
+  <div class="invoice-container">
+    <div class="left-container">
+      <div class="invoice-header">
+        <h2>Facture code : {{ factureDTO.code }}</h2>
+        <p>Date: {{ factureDTO.dateFacture | date: 'dd/MM/yyyy' }}</p>
+      </div>
+      <div class="invoice-info" *ngIf="factureDTO.clientName || factureDTO.fournisseurName">
+        <h3>Informations du 
+          <ng-container *ngIf="factureDTO.fournisseurName">Fournisseur</ng-container>
+          <ng-container *ngIf="factureDTO.clientName">Client</ng-container>
+        </h3>
+        <p>Nom: {{ factureDTO.clientName || factureDTO.fournisseurName }}</p>
+      </div>
+    </div>
+    <div class="right-container" >
+      
+      <p>Adresse: {{ company.adresse }}</p>
+      <p>Code Postal: {{ company.codePostal }}</p>
+      <p>Téléphone: {{ company.telephone }}</p>
+      <p>Mobile: {{ company.mobile }}</p>
+      <p>Email: {{ company.email }}</p>
+      
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="invoice-items">
+        <table class="table align-middle table-nowrap table-centered mb-0">
+          <!-- Table headers -->
+          <thead>
+            <tr>
+              <th>Libellé</th>
+              <th>Prix unitaire</th>
+              <th>Quantité</th>
+              <th>Remise (%)</th>
+              <th>Net HT</th>
+              <th>TVA (%)</th>
+              <th>Net TTC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Table rows with ngFor -->
+            <ng-container *ngFor="let element of factureDTO.elementFactures; let i = index">
+              <tr>
+                <td>{{ element.libelle }}</td>
+                <td>{{ element.prix }}</td>
+                <td>{{ element.quantity }}</td>
+                <td>{{ element.remise }}</td>
+                <td>{{ (element.prix * element.quantity) - (element.prix * element.quantity * element.remise / 100) }}</td>
+                <td>{{ element.tax }}</td>
+                <td>{{ (element.prix * element.quantity) - (element.prix * element.quantity * element.remise / 100) * (1 + element.tax / 100) }}</td>
+              </tr>
+            </ng-container>
+            <!-- Empty rows -->
+            <ng-container *ngFor="let i of [].constructor(32 - factureDTO.elementFactures.length)">
+              <tr class="empty-row">
+                <td colspan="7"></td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <!-- Table footer -->
+          <tfoot>
+            <tr>
+              <th colspan="4">Total</th>
+              <td>{{ getTotalHT() }}</td>
+              <td>{{ getTotalTVA() }}</td>
+              <td>{{ getTotalTTC() }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <table class="table align-middle table-nowrap table-centered mt-4">
+    <thead>
+      <tr>
+        <th>Montant total HT:</th>
+        <td>{{ getTotalHT() }}</td>
+        <th>Total TVA:</th>
+        <td>{{ getTotalTVA() }}%</td>
+        <th>Total remise:</th>
+        <td></td>
+        <th>Total TTC:</th>
+        <td>{{ getTotalTTC() | currency }}</td>
+      </tr>
+    </thead>
+  </table>
+</div> 
+<button class="btn btn-primary print-button" onclick="window.print()">Print</button>

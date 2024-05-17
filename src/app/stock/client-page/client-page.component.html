@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+      <!-- Left Container for Clients -->
+      <div class="col-md-6">
+        <h2>Clients</h2>
+        <table class="table table-bordered">
+          <thead style="background-color: lightgray;">
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Numéro Téléphone</th>
+              <th>Adresse</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let client of clients">
+              <td>{{ client.nom }}</td>
+              <td>{{ client.email }}</td>
+              <td>{{ client.numero_telephone }}</td>
+              <td>{{ client.address }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Right Container for Add Client Form -->
+      <div class="col-md-6 form-container">
+        <h2>Ajouter un Client</h2>
+        <form (ngSubmit)="saveClient()" #clientForm="ngForm">
+          <div class="form-group">
+            <label for="nom">Nom:</label>
+            <input type="text" class="form-control" id="nom" [(ngModel)]="client.nom" name="nom" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="client.email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="numero_telephone">Numéro Téléphone:</label>
+            <input type="text" class="form-control" id="numero_telephone" [(ngModel)]="client.numero_telephone" name="numero_telephone" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Adresse:</label>
+            <input type="text" class="form-control" id="address" [(ngModel)]="client.address" name="address" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Ajouter Client</button>
+        </form>
+  
+        <div *ngIf="isNewClient" class="alert alert-success alert-dismissible mt-3">
+          Nouveau client {{ client.nom }} a été ajouté!
+        </div>
+      </div>
+    </div>
+  </div>
+  

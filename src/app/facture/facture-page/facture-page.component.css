@@ -1,0 +1,60 @@
+@media print {
+  .print-button {
+     display: none!important;
+   }
+   @page {
+     size: auto;
+     margin: 0;
+   }
+ 
+   /* Hide the header and footer */
+   header, footer {
+     display: none;
+   }
+ 
+   /* Hide other elements */
+   .element-to-hide {
+     display: none;
+   }
+ }
+ 
+ .invoice-container {
+   display: flex;
+   justify-content: space-between; /* To push containers to the sides */
+   margin-bottom: 20px; /* Increase space between elements */
+ }
+ 
+ /* Style for the left container */
+ .left-container {
+   width: 50%;
+ }
+ 
+ /* Style for the right container */
+ .right-container {
+   width: 50%;
+ }
+ 
+ /* Style for the invoice table */
+ .invoice-items table {
+   width: 100%;
+   border-collapse: collapse;
+   min-height: 400px; /* Adjust as needed */
+   border-left: 1px solid lightgray; /* Add left border */
+   border-right: 1px solid lightgray; /* Add right border */
+ }
+ 
+ .invoice-items th,
+ .invoice-items td {
+   border-bottom: 1px solid lightgray; /* Add bottom border only */
+ }
+ 
+ /* Style for table header */
+ .invoice-items th {
+   background-color: #f2f2f2;
+ }
+ 
+ /* Define styles for the empty table rows */
+ .invoice-items tbody tr.empty-row td {
+   border-bottom: none; /* Remove bottom border */
+ }
+ 

@@ -1,0 +1,62 @@
+<div class="containerr">
+
+  <label for="Commande" class="form-label">1. Choisir le commande Pour le Retour:</label>
+  <div class="custom-ng-select" (click)="toggleCommandeDropdown($event)">
+    <div class="input-container">
+      <input class="form-control" type="text" [(ngModel)]="selectedCodeCommande" (input)="searchCommande(selectedCodeCommande)"  placeholder="Search...">
+      <!-- Add a button with a "X" icon as suffix -->
+      <span class="clear-icon" *ngIf="selectedCodeCommande" (click)="clearSelectedCommande()" >x</span>
+    </div>
+    <!-- Dropdown options -->
+    <div class="options-container" *ngIf="showCommandeDropdown && codeCommandeList.length > 0">
+      <div class="option" *ngFor="let commande of codeCommandeList" (click)="selectCommande(commande)">
+        {{ commande }}
+      </div>
+    </div>
+  </div>
+
+  <label for="element" class="form-label">2. Choisir le Produit:</label>
+  <div class="custom-ng-select" [class.disabled]="!selectedCodeCommande" (click)="toggleElementFactureDropdown($event)">
+    <div class="input-container">
+      <input class="form-control" type="text" [(ngModel)]="selectedElement" (input)="searchProduct(selectedElement)"  placeholder="Search..." [readonly]="!selectedCodeCommande">
+      <!-- Add a button with a "X" icon as suffix -->
+      <span class="clear-icon" *ngIf="selectedElement" (click)="clearSelectedElement()" >x</span>
+    </div>
+    <!-- Dropdown options -->
+    <div class="options-container" *ngIf="showElementFactureDropdown && ListelementFactures.length > 0">
+      <div class="option" *ngFor="let elementFacture of ListelementFactures" (click)="selectProduct(elementFacture)">
+        {{ elementFacture.libelle }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Radio Buttons -->
+  <div class="mb-3" >
+    <div class="mb-3">
+      <label for="quantity" class="form-label">3. Quantity:</label>
+      <input type="number" id="quantity" [(ngModel)]="quantity" name="quantity" class="form-control" [min]="1" [max]="element.quantity" required [readonly]="!selectedElement" >
+    </div>
+    <label class="form-label">4.</label>
+    <div class="form-check" *ngFor="let statusOption of ['RETOURNEE', 'ENDOMMAGE', 'CUSTOM']" >
+      <input class="form-check-input" type="radio" name="status" [id]="statusOption" [value]="statusOption" [(ngModel)]="status" [readonly]="!selectedElement">
+      <label class="form-check-label" [for]="statusOption">{{ statusOption }}</label>
+    </div>
+  </div>
+
+  <!-- Custom Status Input -->
+  <div *ngIf="status === 'CUSTOM'" class="mb-3" >
+    <label for="customStatus" class="form-label">Custom Status:</label>
+    <input type="text" id="customStatus" [(ngModel)]="status" name="customStatus" class="form-control" required [readonly]="!selectedElement">
+  </div>
+
+  <!-- Description Textarea -->
+  <div class="mb-3">
+    <label for="description" class="form-label">5. Description:</label>
+    <textarea id="description" [(ngModel)]="description" name="description" class="form-control" required [readonly]="!selectedElement"></textarea>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="d-grid gap-2" *ngIf="selectedElement">
+    <button (click)="addProduit()" class="btn btn-primary" >Enregistrer</button>
+  </div>
+</div>

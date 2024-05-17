@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="mt-4 mb-4 insert-form">
+    <h4>Ajouter un Produit</h4>
+    <form (ngSubmit)="addProduit()" class="mt-3">
+      <!-- Libelle input -->
+      <div class="mb-3">
+        <label for="libelle" class="form-label">Libelle:</label>
+        <input type="text" id="libelle" [(ngModel)]="libelle" name="libelle" class="form-control" required>
+      </div>
+
+      <!-- Description textarea -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" [(ngModel)]="description" name="description" class="form-control"
+          required></textarea>
+      </div>
+
+      <!-- Prix and Tax inputs -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="prix" class="form-label">Prix:</label>
+          <input type="number" id="prix" [(ngModel)]="prix" name="prix" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="taxe" class="form-label">Taxe:</label>
+          <input type="number" id="taxe" [(ngModel)]="taxe" name="taxe" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="cout" class="form-label">Cout:</label>
+          <input type="number" id="cout" [(ngModel)]="cout" name="cout" class="form-control" required>
+        </div>
+      </div>
+
+      <!-- Quantite, MinStock, and MaxStock inputs -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="quantite" class="form-label">Quantite:</label>
+          <input type="number" id="quantite" [(ngModel)]="quantite" name="quantite" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="minStock" class="form-label">Stock Minimum:</label>
+          <input type="number" id="minStock" [(ngModel)]="minStock" name="minStock" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="maxStock" class="form-label">Stock Maximum:</label>
+          <input type="number" id="maxStock" [(ngModel)]="maxStock" name="maxStock" class="form-control" required>
+        </div>
+      </div>
+
+      <!-- Date Arrivage input and Categorie select with button -->
+      <div class="row mb-3">
+        <!-- Date Arrivage input -->
+        <div class="col-md-6">
+          <label for="date_arrivage" class="form-label">Date Arrivage:</label>
+          <input type="date" id="date_arrivage" [(ngModel)]="date_arrivage" name="date_arrivage"
+            class="form-control" required>
+        </div>
+        <!-- Categorie select with button -->
+        <div class="col-md-6">
+          <label for="categorieName" class="form-label">Categorie:</label>
+          <div class="input-group">
+            <select id="categorieName" [(ngModel)]="categorieIDn" name="categorieName" class="form-control"
+              required>
+              <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.nom }}</option>
+            </select>
+            <button type="button" class="btn btn-success" (click)="addCustomCategorie()">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fournisseur select with button and Status radios -->
+      <div class="row mb-3">
+        <!-- Fournisseur select with button -->
+        <div class="col-md-6">
+          <label for="fournisseurName" class="form-label">Fournisseur:</label>
+          <div class="input-group">
+            <select id="fournisseurName" [(ngModel)]="fournisseurIDn" name="fournisseurName"
+              class="form-control" required>
+              <option *ngFor="let fournisseur of fournisseurs" [value]="fournisseur.id">{{ fournisseur.nom }}</option>
+            </select>
+            <button type="button" class="btn btn-success" (click)="addCustomFournisseur()">+</button>
+          </div>
+        </div>
+        <!-- Status radios -->
+        <div class="col-md-6">
+          <label class="form-label">Statut:</label>
+          <div class="status" name="statut">
+            <div>
+              <label>
+                <input type="radio" name="statut" [value]="'DISPONIBLE'" [(ngModel)]="status">
+                DISPONIBLE
+              </label>
+            </div>
+            <div>
+              <label>
+                <input type="radio" name="statut" [value]="'PAS_DE_STOCK'" [(ngModel)]="status">
+                PAS_DE_STOCK
+              </label>
+            </div>
+            <div>
+              <label>
+                <input type="radio" name="statut" [value]="'CUSTOM'" [(ngModel)]="status">
+                Personnalisé
+              </label>
+              <input type="text" *ngIf="status === 'CUSTOM'" [(ngModel)]="customStatus" class="form-control mt-2"
+                placeholder="Entrer le statut personnalisé">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Product button -->
+      <button type="button" class="btn btn-primary" (click)="addProduit()">Ajouter le Produit</button>
+
+      <!-- Success Alert -->
+      <div class="alert alert-success d-flex align-items-center mt-3" *ngIf="showAlert" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use
+            xlink:href="#check-circle-fill" /></svg>
+        <div>
+          Le produit a été ajouté avec succès.
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

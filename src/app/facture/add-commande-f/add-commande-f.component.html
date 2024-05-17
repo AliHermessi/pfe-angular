@@ -1,0 +1,183 @@
+<!-- add-commande.component.html -->
+<div class="container pt-4">
+
+
+    <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" *ngIf="showAlert===true" role="alert">
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+      <div>
+        Le commande a ete ajouté avec code : {{ codeCommande }}
+      </div>
+    </div>
+    
+        <div class="row space-between">
+          <!-- Right Container -->
+          <div class="col-md-6 rightContainer">
+            <div class="form-group">
+              <label for="dateCommande">Date Commande</label>
+              <input type="datetime-local" class="form-control" id="dateCommande" [(ngModel)]="dateCommande">
+            </div>
+            <div class="form-group">
+              <label for="adresse">Adresse</label>
+              <input type="text" class="form-control" id="adresse" [(ngModel)]="adresse">
+            </div>
+          </div>
+      
+          <!-- Left Container -->
+          <div class="col-md-6 leftContainer">
+            <div class="form-group">
+              <label for="typeCommande">Type Commande</label>
+              <select class="form-control" id="typeCommande" [(ngModel)]="typeCommande" (change)="onTypeChange()">
+                <option value="IN">IN</option>
+                <option value="OUT">OUT</option>
+              </select>
+            </div>
+            <div *ngIf="typeCommande === 'IN'">
+              <div class="form-group">
+                <label for="fournisseur">Fournisseur</label>
+                <select class="form-control" id="fournisseur" [(ngModel)]="selectedFournisseur" (change)="onFournisseurChange()">
+                  <option style="font-weight: bold;" value="custom">New Custom</option>
+                  <option *ngFor="let fournisseur of fournisseurs" [value]="fournisseur.id">{{ fournisseur.nom }}</option>
+                  
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fournisseurNom">Nom</label>
+                <input type="text" class="form-control" id="fournisseurNom" [value]="fournisseurNom" [(ngModel)]="fournisseurNom"  [readonly]="!isFournisseurSelected">
+              </div>
+              <div class="form-group">
+                <label for="fournisseurAdresse">Adresse</label>
+                <input type="text" class="form-control" id="fournisseurAdresse" [(ngModel)]="fournisseurAdresse" [readonly]="!isFournisseurSelected">
+              </div>
+              <div class="form-group">
+                <label for="fournisseurNumero">Numéro</label>
+                <input type="text" class="form-control" id="fournisseurNumero" [(ngModel)]="fournisseurNumero" [readonly]="!isFournisseurSelected">
+              </div>
+            </div>
+            <div *ngIf="typeCommande === 'OUT'">
+              <div class="form-group">
+                <label for="client">Client</label>
+                <select class="form-control" id="client" [(ngModel)]="selectedClient" (change)="onClientChange()">
+                  <option style="font-weight: bold;" value="custom">New Custom</option>
+                  <option *ngFor="let client of clients" [value]="client.id">{{ client.nom }}</option>
+                  
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="clientNom">Nom</label>
+                <input type="text" class="form-control" id="clientNom" [value]="clientNom" [(ngModel)]="clientNom" [readonly]="!isClientSelected">
+              </div>
+              <div class="form-group">
+                <label for="clientEmail">Email</label>
+                <input type="text" class="form-control" id="clientEmail" [(ngModel)]="clientEmail" [readonly]="!isClientSelected">
+              </div>
+              <div class="form-group">
+                <label for="clientAdresse">Adresse</label>
+                <input type="text" class="form-control" id="clientAdresse" [(ngModel)]="clientAdresse" [readonly]="!isClientSelected">
+              </div>
+              <div class="form-group">
+                <label for="clientNumero">Numéro Téléphone</label>
+                <input type="text" class="form-control" id="clientNumero" [(ngModel)]="clientNumero" [readonly]="!isClientSelected">
+              </div>
+            </div>
+            <button *ngIf="selectedFournisseur === 'custom' || selectedClient === 'custom'" class="btn btn-success" (click)="onNewCustomSave()">Save</button>
+          </div>
+          
+          
+        </div>
+      
+        <!-- Table Container -->
+        <div class="mt-4">
+          <table class="table table-bordered table-stripped">
+            <thead style="background-color: lightgray;">
+              <tr>
+                <th>Ref. code</th>
+                <th>Produit</th>
+                <th>Quant.</th>
+                <th>P.Unit.</th>
+                <th>Net. HT</th>
+                <th>Rem. %</th>
+                <th>TVA %</th>
+                <th>Net. TTC</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let produit of produitsList; let i = index">
+                <td style="min-width:250px;max-width:250px ; ">
+                  <div class="wrapper">
+                    
+                    <ng-select
+                      [(ngModel)]="produit.refCode"
+                      (search)="searchByRefCode(produit.refCode)"
+                      [items]="refCodes"
+                      
+                      (blur)="clearItems('refCodes')"
+                      (change)="updateProduitValues(produit)">
+                      <ng-template ng-option-tmp let-item="item" let-index="index">
+                        {{ item }}
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </td>
+                <td style="min-width:250px;max-width:250px ; ">
+                  <div class="wrapper" >
+                    
+                    <ng-select
+                      [(ngModel)]="produit.libelle"
+                      (search)="searchProduitByLibelle(produit.libelle)"
+                      [items]="libelleArray"
+                      
+                      (blur)="clearItems('libelleArray')"
+                      (change)="updateProduitValues(produit)">
+                      <ng-template ng-option-tmp let-item="item" let-index="index">
+                        {{ item }}
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </td>
+                <td>
+                  <input type="number" class="form-control" [(ngModel)]="produit.quantity" [disabled]="!produit.libelle" (change)="updateNetHT(produit)">
+                </td>
+                <td><input type="text" class="form-control" [(ngModel)]="produit.price" readonly></td>
+                <td><input type="text" class="form-control" [(ngModel)]="produit.netHT" readonly></td>
+                <td><input type="text" class="form-control" [(ngModel)]="produit.remise" (change)="updateNetHT(produit)" ></td>
+                <td><input type="text" class="form-control" [(ngModel)]="produit.tax" ></td>
+                <td><input type="text" class="form-control" [(ngModel)]="produit.netTTC" readonly></td>
+                <td><button class="btn btn-danger" (click)="deleteProduit(i)">Delete</button></td>
+              </tr>
+              <tr>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>
+                  <button class="btn btn-success" (click)="addNewItem()">+</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-4 mb-4" *ngIf="showResult === true">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Total HT</th>
+                        <th>Total Remise</th>
+                        <th>Total TVA</th>
+                        <th>Net</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ montantTotalHT }}</td>
+                        <td>{{ montantTotalRemise }}</td>
+                        <td>{{ montantTotalTTC - montantTotalHT }}</td>
+                        <td>{{ montantTotalTTC }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+           
+          <button class="btn btn-danger mt-4" style="float:right;padding:10px;" (click)="SaveCommande()">Enregistrer commande</button>
+        </div>
+        
+        
+    
+      </div>
+      

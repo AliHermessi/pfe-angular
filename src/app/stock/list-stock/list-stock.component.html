@@ -1,0 +1,149 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+<h1 style="text-align: center;"> List de produits </h1>
+<div class="container">
+  <div class="arrow-container bg-primary" (click)="toggleArrow()">
+    <i class="bi"  [ngClass]="isArrowUp? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
+  </div>
+
+  <div class="container mt-3 p-3 filters-container" [ngClass]="{'expanded': showFilters}">
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <!-- Filter by Category -->
+        <label for="categoryFilter" class="form-label">Filter by Category:</label>
+        <ng-select 
+          [items]="filteredCategories"
+          bindLabel="nom"
+          [virtualScroll]="true"
+          (search)="categorieSearch()"
+          [(ngModel)]="categorieSearchValue"
+          placeholder="Search category..."
+          (ngModelChange)="updateFilterList('category')"
+        ></ng-select>
+      </div>
+      <div class="col-md-3">
+        <!-- Filter by Price Range -->
+        <label for="priceFilter" class="form-label">Filter by Price Range:</label>
+        <div class="input-group">
+          <input id="priceFilter" type="number" class="form-control" [(ngModel)]="minPrice" placeholder="Min Price" (ngModelChange)="updateFilterList('price')">
+          <input id="priceFilter" type="number" class="form-control" [(ngModel)]="maxPrice" placeholder="Max Price" (ngModelChange)="updateFilterList('price')">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <!-- Filter by Quantity Range -->
+        <label for="quantityFilter" class="form-label">Filter by Quantity Range:</label>
+        <div class="input-group">
+          <input id="quantityFilter" type="number" class="form-control" [(ngModel)]="minQuantity" placeholder="Min Quantity" (ngModelChange)="updateFilterList('quantity')">
+          <input id="quantityFilter" type="number" class="form-control" [(ngModel)]="maxQuantity" placeholder="Max Quantity" (ngModelChange)="updateFilterList('quantity')">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <!-- Filter by Arrival Date Range -->
+        <label for="dateFilter" class="form-label">Filter by Arrival Date Range:</label>
+        <div class="input-group">
+          <input id="dateFilter" type="date" class="form-control" [(ngModel)]="startDate" (ngModelChange)="updateFilterList('date')">
+          <input id="dateFilter" type="date" class="form-control" [(ngModel)]="endDate" (ngModelChange)="updateFilterList('date')">
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <!-- Search bar and total page select -->
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchValue" style="width: 70%">
+          <select class="form-select form-select-sm" (ngModelChange)="updateTotalpage(pageSize)" [(ngModel)]="pageSize" style="width: 30%">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+          <button class="btn btn-outline-secondary btn-sm" type="button" (click)="search()">Search</button>
+        </div>
+      </div>
+      <div class="col-md-6 d-flex justify-content-end">
+        <!-- Clear filters and apply buttons -->
+        <button class="btn btn-danger me-2" (click)="clearFilters()">Clear All</button>
+        <button class="btn btn-primary" (click)="applyFilters()">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table  table-bordered ">
+          <thead>
+            <tr>
+              <th></th>
+              <th (click)="changeSort('libelle')">Lib.</th>
+              <th (click)="changeSort('prix')">Prix</th>
+              <th (click)="changeSort('cout')">Cout</th>
+              <th (click)="changeSort('quantite')">Quant.</th>
+              <th (click)="changeSort('minStock')">Min Quant.</th>
+              <th (click)="changeSort('maxStock')">Max Quant.</th>
+              <th (click)="changeSort('date_arrivage')">Date Arrivage</th>
+              <th (click)="changeSort('categorieName')">Categorie</th>
+              <th (click)="changeSort('fournisseurName')">Fournisseur</th>
+              <th (click)="changeSort('status')">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let produit of produits" [ngClass]="{'selected-row': produit.selected}">
+              <td>
+                <input type="checkbox" [(ngModel)]="produit.selected" (click)="toggleProductSelection(produit)">
+              </td>
+              <td>{{ produit.libelle }}</td>
+              <td>{{ produit.prix }}</td>
+              <td>{{ produit.cout }}</td>
+              <td>{{ produit.quantite }}</td>
+              <td>{{ produit.minStock }}</td>
+              <td>{{ produit.maxStock }}</td>
+              <td>{{ produit.date_arrivage }}</td>
+              <td>{{ produit.categorieName }}</td>
+              <td>{{ produit.fournisseurName }}</td>
+              <td>{{ produit.status }}</td>
+            </tr>
+            <ng-container *ngIf="(pageSize - produits.length) > 0">
+              <tr *ngFor="let _ of getEmptyRows()">
+                  <td colspan="11" >&nbsp;</td>
+                   <!-- Adjust colspan based on the number of columns -->
+              </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <button class="btn btn-primary me-2" [disabled]="currentPage === 1" (click)="prevPage()">Prev</button>
+      <button class="btn btn-primary" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+    </div>
+    <div class="col-md-12">
+      <div>{{currentPage}} / {{totalPages}}</div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <h2 style="text-align: center;">Selected Produits</h2>
+      <div class="selected-produits-container">
+        <div *ngIf="selectedProduits.length === 0" class="empty-message">No produits selected.</div>
+        <div class="selected-produits-row" *ngFor="let row of selectedProduitsRows">
+          <div class="selected-produit" *ngFor="let selectedProduit of row">
+            <span>{{ selectedProduit.libelle }}</span>
+            <span class="remove-icon" (click)="removeSelectedProduit(selectedProduit)">x</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="creer-button" (click)="creerCommande()">Creer Commande</button>
+        <button class="reset-button" (click)="resetSelectedProduits()">Reset</button>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+</div>

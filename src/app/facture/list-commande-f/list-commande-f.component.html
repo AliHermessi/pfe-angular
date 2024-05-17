@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <!-- Alert -->
+      
+      <h2>Commandes</h2>
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Code Commande</th>
+            <th>Code Facture</th>
+            <th>Date Commande</th>
+            <th>Montant Total</th>
+            <th>Type Commande</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let commande of commandes.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index" >
+            <td>{{ commande.codeCommande }}</td>
+            <td>{{ commande.codeFacture }}</td>
+            <td>{{ commande.dateCommande }}</td>
+            <td>{{ commande.montantTotal }}</td>
+            <td>{{ commande.type_commande }}</td>
+            <td>
+              <button class="btn btn-sm btn-primary" (click)="openCommande(commande.id)">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <button class="btn btn-sm btn-success" (click)="convertirCommandeEtCreerFacture(commande.id)" *ngIf="!commande.factureGenerated">
+                <i class="fa-solid fa-file-invoice"></i>              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteCommande(commande.id)" [disabled]="commande.factureGenerated">
+                <i class="fa-solid fa-trash"></i>              </button>
+            </td>
+          </tr>
+          <tr *ngFor="let emptyRow of emptyRows; let i = index">
+            <td colspan="6">&laquo;</td>
+          </tr>
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="#" aria-label="Previous" (click)="previousPage()">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let i of getPageNumbers(); let page = index">
+            <a class="page-link" (click)="setCurrentPage(page + 1)">{{ page + 1 }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="#" aria-label="Next" (click)="nextPage()">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="input-group mt-3">
+        <input type="text" class="form-control" placeholder="Search by facture code" aria-label="Search by facture code" aria-describedby="button-addon2" [(ngModel)]="searchTerm">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="applySearch()">Apply</button>
+      </div>
+</div>

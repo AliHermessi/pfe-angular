@@ -1,0 +1,86 @@
+.rightContainer {
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.leftContainer {
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+/* Adjustments to the dropdown containers */
+.custom-ng-select .ng-select-container {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 400px; /* Adjusted width */
+    margin-right: 10px; /* Added margin */
+}
+
+.custom-ng-select {
+    position: relative;
+    margin-bottom: 10px; /* Added margin */
+}
+
+.options-container {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: calc(100% - 20px); /* Adjusted width */
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    z-index: 1000;
+}
+.label {
+    font-weight: bold;
+    font-size: large; /* Make the text bold */
+    color: rgb(49, 71, 209); /* Set the text color */
+    margin-bottom: 5px; /* Add bottom margin for spacing */
+}
+
+.option {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #c9c4c4;
+}
+.input-container {
+    position: relative;
+  }
+  
+  .clear-icon {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa; /* Light gray color */
+    display: none; /* Initially hidden */
+  }
+  
+  .custom-ng-select:hover .clear-icon {
+    display: inline-block; /* Show the "x" icon on hover */
+  }
+  
+  .clear-icon:hover {
+    color: #666; /* Darker gray color on hover */
+  }
+  
+  
+
+  .containerr {
+    width: 80%;
+    margin: 50px auto; /* Center the container horizontally and add 50px top margin */
+    padding: 20px; /* Add padding inside the container */
+    border: 1px solid #ccc; /* Add a border */
+    background-color: white; /* Set the background color to white */
+}
+

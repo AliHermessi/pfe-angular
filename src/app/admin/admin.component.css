@@ -1,0 +1,95 @@
+
+body{
+  
+  background-color: #c5c3c3 !important;  /* This is a very light gray color */
+}
+
+table tr:nth-child(even) {
+  background-color: white; /* White background color */
+}
+
+table tr:nth-child(odd) {
+  background-color: #f5f5f5; /* Gray background color */
+}
+th {
+    cursor: pointer; /* Change cursor to pointer on hover */
+    text-decoration: none; /* Remove default underline */
+    transition: text-decoration 0.3s; /* Smooth transition for underline effect */
+    background-color: #2828d8;
+    color: white;
+    border-color:rgb(15, 15, 15);
+  }
+  
+  th:hover {
+    text-decoration: underline; /* Underline text on hover */
+  }
+  .navbar {
+    padding: 15px 20px;
+    background-color: black;
+}
+
+.navbar-text {
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+
+td {
+    border: 0.5px solid rgb(216, 216, 216);
+}
+
+
+.outer-container {
+  margin-left: 250px; 
+  background-color: #78A1BB;
+  position: relative;
+  height: calc(140vh - 60px); 
+  padding: 15px;
+  padding-top:80px;
+  
+}
+
+.inner-container {
+  background-color: white;
+  min-height: fit-content; /* Make the inner container adjust its height based on the content */
+  overflow-y: auto;
+  
+  height: 100%;
+  border-radius: 10px; 
+}
+
+
+.breadcrumb {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.breadcrumb-item a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+/* Add the divider */
+.breadcrumb-item::after {
+  content: ">";
+  margin: 0 5px; /* Adjust spacing as needed */
+  color: #6c757d; /* Color of the divider */
+}
+
+.breadcrumb-item:last-child::after {
+  content: none; /* Remove the divider from the last item */
+}
+
+

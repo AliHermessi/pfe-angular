@@ -1,0 +1,19 @@
+/* CSS */
+.table th {
+    cursor: pointer; /* Add pointer cursor */
+  }
+  
+  /* Style for hover */
+  .table th:hover {
+    background-color: #f2f2f2; /* Add background color on hover */
+  }
+  
+  /* Style for active */
+  .table th.active {
+    background-color: #007bff; /* Add background color when active */
+    color: white; /* Change text color to white */
+  }
+  
+  .table {
+      width:80%;
+  }

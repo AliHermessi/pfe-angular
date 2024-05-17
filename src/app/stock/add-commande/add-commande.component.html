@@ -1,0 +1,109 @@
+<!-- add-commande.component.html -->
+<div class="container pt-4">
+
+
+
+
+    <div class="row space-between">
+      <!-- Right Container -->  
+      <div class="col-md-6 rightContainer">
+        <div class="custom-ng-select" (click)="toggleDropdown($event)">
+          <input class="form-control" type="text" [(ngModel)]="selectedCodeCommande" (input)="searchByCodeCommande(selectedCodeCommande)" placeholder="Search...">
+          <div class="options-container" *ngIf="showDropdown && codeCommandeList.length > 0">
+            <div class="option" *ngFor="let option of codeCommandeList" (click)="selectOption(option)">
+              {{ option }}
+            </div>
+          </div>
+        </div>
+        
+          
+        
+        
+        <div class="form-group">
+          <label for="dateCommande">Date Commande</label>
+          <input type="text"class="form-control" readonly [(ngModel)]="dateCommande" name="dateCommande">
+
+        </div>
+        <div class="form-group">
+          <label for="adresse">Adresse</label>
+          <input type="text" class="form-control" id="adresse" [(ngModel)]="adresse">
+        </div>
+      </div>
+  
+      <!-- Left Container -->
+      <div class="col-md-6 leftContainer">
+        <div class="form-group">
+          <label for="typeCommande">Type Commande</label>
+          <input type="text" class="form-control" id="typeCommande" readonly  [(ngModel)]="typeCommande" >
+            
+        </div>
+        <div *ngIf="typeCommande === 'IN'">
+          
+            <label for="fournisseur">Fournisseur</label>
+          
+          <div class="form-group">
+            <label for="fournisseurNom">Nom</label>
+            <input type="text" class="form-control" id="fournisseurNom" [value]="fournisseurNom" [(ngModel)]="fournisseurNom"  [readonly]="!isFournisseurSelected">
+          </div>
+          <div class="form-group">
+            <label for="fournisseurAdresse">Adresse</label>
+            <input type="text" class="form-control" id="fournisseurAdresse" [(ngModel)]="fournisseurAdresse" [readonly]="!isFournisseurSelected">
+          </div>
+          <div class="form-group">
+            <label for="fournisseurNumero">Numéro</label>
+            <input type="text" class="form-control" id="fournisseurNumero" [(ngModel)]="fournisseurNumero" [readonly]="!isFournisseurSelected">
+          </div>
+        </div>
+        <div *ngIf="typeCommande === 'OUT'">
+          <div class="form-group">
+            <label for="client">Client</label>
+           
+          </div>
+          <div class="form-group">
+            <label for="clientNom">Nom</label>
+            <input type="text" class="form-control" id="clientNom" [value]="clientNom" [(ngModel)]="clientNom" [readonly]="!isClientSelected">
+          </div>
+          <div class="form-group">
+            <label for="clientAdresse">Adresse</label>
+            <input type="text" class="form-control" id="clientAdresse" [(ngModel)]="clientAdresse" [readonly]="!isClientSelected">
+          </div>
+          <div class="form-group">
+            <label for="clientNumero">Numéro Téléphone</label>
+            <input type="text" class="form-control" id="clientNumero" [(ngModel)]="clientNumero" [readonly]="!isClientSelected">
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  
+    <!-- Table Container -->
+    <div class="mt-4">
+      <table class="table table-bordered table-stripped">
+        <thead style="background-color: lightgray;">
+          <tr>
+            <th>Ref. code</th>
+            <th>Produit</th>
+            <th>Quant.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let elementFacture of ListelementFactures; let i = index">
+            <td><input type="text" class="form-control" [(ngModel)]="elementFacture.refProduit" readonly></td>
+            <td><input type="text" class="form-control" [(ngModel)]="elementFacture.libelle" readonly></td>
+            <td>
+              <input type="number" class="form-control" [(ngModel)]="elementFacture.quantity" readonly >
+            </td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+       
+      <button class="btn btn-danger mt-4" style="float:right;padding:10px;" (click)="Imprimer()">Imprimer</button>
+    </div>
+    
+    
+
+  </div>
+  

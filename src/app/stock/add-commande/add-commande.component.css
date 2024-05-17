@@ -1,0 +1,79 @@
+
+
+
+
+
+
+
+
+
+.rightContainer{
+    margin-top:50px;
+    
+    padding:20px;
+    border: 1px solid #ccc;
+}
+.leftContainer{
+    margin-top:50px;
+    padding:20px;
+   
+    border: 1px solid #ccc;
+}
+
+
+.custom-ng-select .ng-select-container {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 300px; /* adjust the width as needed */
+  }
+  
+  /* Style the dropdown list */
+  .custom-ng-select .ng-dropdown-panel {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 300px; /* adjust the width as needed */
+    max-height: 200px; /* adjust the max height as needed */
+    overflow-y: auto;
+  }
+  
+  /* Style the dropdown list items */
+  .custom-ng-select .ng-option {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .custom-ng-select .ng-option:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  
+  .custom-ng-select {
+    position: relative;
+  }
+  
+  .options-container {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    z-index: 1000;
+  }
+  
+  .option {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .option:hover {
+    background-color: #f0f0f0;
+  }
+  
+  

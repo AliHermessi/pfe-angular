@@ -1,0 +1,67 @@
+<div class="top_navbar" >
+  <div class="logo">Dashboard</div>
+  <div class="menu">
+    <div class="notifications">
+      <button class="notifications-btn" (click)="toggleNotifications()">
+        <i class="material-icons notifications-logo">notifications</i>
+        <span class="notifications-badge">0</span>
+      </button>
+      <div class="notifications-dropdown" [ngClass]="{'show': showNotifications}">
+        <div class="notifications-header">Notifications</div>
+        <div class="notifications-list" [style.max-height]="showAllNotifications ? 'none' : '300px'">
+          <!-- Add notifications here -->
+        </div>
+        <button class="show-all-btn" (click)="showAllNotifications = true">Show All</button>
+      </div>
+    </div>
+    <a class="logout-link" (click)="logout()">
+      <i class="material-icons logout-logo">logout</i>
+    </a>
+  </div>
+</div>
+
+<div class="sidebar">
+    <a class="nav-link" (click)="toggleNav('homeFacture')" [class.active]="activeTabFacture === 'homeFacture'">
+      <i class="material-icons">home</i>
+      Home
+    </a>
+    
+      <a class="nav-link" (click)="toggleNav('Commande')" [class.active]="activeTabFacture === 'Commande'">
+        <i class="material-icons">receipt</i>
+        Commande
+      </a>
+      <div *ngIf="activeTabFacture === 'Commande'">
+        <a class="sub-nav-link"(click)="toggleNav('list-commande-f')">Voir Liste de Commande</a>
+        <a class="sub-nav-link" (click)="toggleNav('add-commande-f')">Creer Commande</a>
+      </div>
+    
+    <a class="nav-link" (click)="toggleNav('Facture')" [class.active]="activeTabFacture === 'Facture'">
+      <i class="material-icons">receipt</i>
+      Facture
+    </a>
+    <div *ngIf="activeTabFacture === 'Facture'">
+      <a class="sub-nav-link"(click)="toggleNav('list-facture')">Voir Liste de Facture</a>
+      <a class="sub-nav-link" (click)="toggleNav('add-facture')">Creer Facture</a>
+    </div>
+    <a class="nav-link" (click)="toggleNav('Fournisseur')" [class.active]="activeTabFacture === 'Fournisseur'">
+      <i class="material-icons">store</i>
+      Fournisseur
+    </a>
+    <a class="nav-link" (click)="toggleNav('Categorie')" [class.active]="activeTabFacture === 'Categorie'">
+      <i class="material-icons">category</i>
+      Categorie
+    </a>
+    <a class="nav-link" (click)="toggleNav('Client')" [class.active]="activeTabFacture === 'Client'">
+      <i class="material-icons">person</i>
+      Client
+    </a>
+   
+    <a class="nav-link" (click)="toggleNav('facture-page')" [class.active]="activeTabFacture === 'facture-page'">
+      <i class="material-icons">contact_page</i>
+      Contacter Admin
+    </a>
+    <a class="nav-link logout-link" (click)="logout()">
+      <i class="material-icons">logout</i>
+      Logout
+    </a>
+</div>

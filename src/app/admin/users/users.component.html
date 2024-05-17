@@ -1,0 +1,25 @@
+<div class="col-md-6 order-md-1 order-3">
+          
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>cin</th>
+                <th>username</th>
+                <th>password</th>
+                <th>role</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.cin }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.rolename }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
