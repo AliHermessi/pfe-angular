@@ -1,0 +1,21 @@
+.container {
+    margin-top: 20px;
+  }
+  
+  .table {
+    width: 90%;
+    margin: auto;
+  }
+  
+  .clickable-row {
+    cursor: pointer;
+  }
+  
+  .modal-lg {
+    max-width: 80%;
+  }
+  
+  h4.modal-title {
+    margin: auto;
+  }
+  

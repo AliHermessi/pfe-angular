@@ -47,6 +47,12 @@ import { ChartModule } from 'primeng/chart';
 import { ButtonModule } from 'primeng/button';
 import { ClientFournisseurChartsComponent } from './admin/dashboard-admin/client-fournisseur-charts/client-fournisseur-charts.component';
 import { ChartProduitComponent } from './admin/dashboard-admin/chart-produit/chart-produit.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessagingComponent } from './messaging/messaging.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+//const config: SocketIoConfig = { url: 'http://localhost:8083', options: {} };
+//SocketIoModule.forRoot(config)
 
 @NgModule({
   declarations: [
@@ -82,6 +88,7 @@ import { ChartProduitComponent } from './admin/dashboard-admin/chart-produit/cha
     ComboChartComponent,
     ClientFournisseurChartsComponent,
     ChartProduitComponent,
+    MessagingComponent,
    
     
   ],
@@ -97,9 +104,11 @@ import { ChartProduitComponent } from './admin/dashboard-admin/chart-produit/cha
     MatInputModule,
     MatIconModule,
     MatOptionModule,
-    MatSelectModule,NgSelectModule,NgxChartsModule,
+    MatSelectModule,NgSelectModule,NgxChartsModule, 
     ChartModule,
-    ButtonModule,
+    ButtonModule,BrowserAnimationsModule,
+    MatDialogModule,
+    
 
   ],
   bootstrap: [AppComponent],

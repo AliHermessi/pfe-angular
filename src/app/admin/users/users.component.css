@@ -1,0 +1,18 @@
+.container {
+    max-width: 70%;
+    min-width: 70%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.btn {
+    display: block;
+    margin: 0 auto;
+}

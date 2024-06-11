@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-add-commande-f',
@@ -31,14 +32,44 @@ export class AddCommandeFComponent {
   clientNumero = '';
   clientEmail = '';
   isNewCustom: boolean = true;
-  
-  constructor(private http: HttpClient, private router: Router) {}
+  selectedProduits: any[] = [];
+  constructor(private http: HttpClient, private router: Router,private sharedService: SharedService) {}
 
   ngOnInit(): void {
     this.fetchProduits();
     this.fetchFournisseurs();
     this.fetchClients();
+    this.sharedService.selectedProduits$.subscribe(produits => {
+      this.selectedProduits = produits;
+    });
+    this.processSelectedProduits(this.selectedProduits);
   }
+  processSelectedProduits(produits: any[]): void {
+   
+    produits.forEach(produit => {
+      this.produitsList.push({
+        id:produit.id,
+        refCode: produit.barcode,
+        libelle: produit.libelle,
+        quantity: 1,
+        price: produit.prix,
+        tax:produit.tax,
+        netHT: 0,
+        remise:0,
+        netTTC:0,
+      });
+    });
+    this.produitsList.forEach(produit => {
+      this.updateNetHT(produit)
+    })
+    
+    // Log or perform any further processing with produitsList
+    console.log('Produits List:', this.produitsList);
+
+  }
+
+
+
 
   fetchProduits(): void {
     this.http.get<any[]>('http://localhost:8083/produits/getAll')
@@ -120,18 +151,56 @@ export class AddCommandeFComponent {
   
   
 
-  
-
-  addNewItem(): void {
+  addNewProductItem() {
     this.produitsList.push({
+      id:0,
       refCode: '',
       libelle: '',
       quantity: 0,
       price: 0,
-      netHT: 0
+      netHT: 0,
+      remise: 0,
+      tax: 0,
+      netTTC: 0,
+      isNewProduct: true // Add this line
     });
   }
+
+  addNewItem(): void {
+    this.produitsList.push({
+      id:0,
+      refCode: '',
+      libelle: '',
+      quantity: 0,
+      price: 0,
+      netHT: 0,
+      remise:0,
+      netTTC:0,
+
+    });
+    
+  }
+
+  onNewProductChange(produit: any) {
+    console.log(produit);
+    if (produit.libelle) {
+      produit.price =  100; // Ensure price is initialized correctly
+      produit.quantity =  1; // Ensure quantity is initialized correctly
+      produit.netHT = 0;
+      produit.remise =  0; // Ensure remise is initialized correctly
+      produit.tax =  0; // Ensure tax is initialized correctly
+      produit.netTTC = 0;
+      this.selectedProduit=produit;
+      this.updateNetHT(produit);
+      console.log(this.selectedProduit);
+      console.log('New Product Values:', produit); // Recalculate totals
+    }
+  }
+
+
+
   updateProduitValues(produit: any): void {
+    
     if (produit.refCode) {
       
       this.selectedProduit=this.produits.find(p => p.barcode === produit.refCode);
@@ -169,27 +238,53 @@ montantTotalHT:number=0;
 montantTotalTTC:number=0;
 montantTotalRemise:number=0;
 updateNetHT(produit: any): void {
-  if (this.selectedProduit) {
-    this.showResult=true;
-    produit.price = this.selectedProduit.prix;
-    produit.netHT = produit.quantity * this.selectedProduit.prix;
-
-    // Check if remise is a number before performing arithmetic operation
-    const remiseValue = parseFloat(produit.remise || '0');
-    if (!isNaN(remiseValue)) {
-      produit.netHT -= produit.netHT * (remiseValue / 100);
-      this.montantTotalRemise -= produit.netHT * (remiseValue / 100);
-    } else {
-      this.montantTotalRemise += produit.netHT * (produit.remise || 0) / 100;
+  // Ensure price and quantity are initialized correctly
+  if (produit.isNewProduct) {
+    produit.price = produit.price || 0;
+    produit.quantity = produit.quantity || 1;
+  } else {
+    this.selectedProduit = this.produits.find(p => p.id === produit.id);
+    if (this.selectedProduit) {
+      produit.price = this.selectedProduit.prix;
+      produit.tax = this.selectedProduit.tax || 0;
+      produit.remise = this.selectedProduit.remise || 0;
     }
-
-    produit.netTTC = produit.netHT * (1+(produit.tax*0.01));
-
-    this.montantTotalHT=this.montantTotalHT+produit.netHT;
-    this.montantTotalTTC=this.montantTotalHT * ((this.selectedProduit.tax*0.01)+1);
-
   }
+
+  // Calculate netHT without considering tax
+  const oldNetHT = produit.netHT || 0; // Store the previous netHT
+  const netHTWithoutTax = produit.quantity * produit.price;
+
+  // Calculate the total amount without tax
+  const totalWithoutTax = netHTWithoutTax - (netHTWithoutTax * (produit.remise / 100));
+
+  // Calculate the tax amount
+  const taxAmount = totalWithoutTax * (produit.tax / 100);
+
+  // Calculate netHT considering tax
+  produit.netHT = totalWithoutTax + taxAmount;
+
+  // Calculate netTTC
+  produit.netTTC = produit.netHT + taxAmount;
+
+  // Calculate the remise for this product
+  const remiseAmount = oldNetHT - produit.netHT;
+
+  // Update total remise
+  this.montantTotalRemise += remiseAmount;
+
+  // Update montantTotalHT and montantTotalTTC
+  this.montantTotalHT += (produit.netHT - oldNetHT);
+  this.montantTotalTTC = this.produitsList.reduce((total, p) => total + (p.netTTC || 0), 0);
+  this.montantTotalTTC = Math.round(this.montantTotalTTC * 100) / 100;
+
+  // Set showResult to true to display results
+  this.showResult = true;
 }
+
+
+
+
   
   
 
@@ -308,6 +403,10 @@ SaveCommande(): void {
     elementsFacture: elementFacturesDTO,
     fournisseur_id: this.typeCommande === 'OUT' ? null : this.selectedFournisseur,
     client_id: this.typeCommande === 'IN' ? null : this.selectedClient,
+    montantTotalttc:this.montantTotalTTC,
+    montantTotalht:this.montantTotalHT,
+    totalTax:this.montantTotalTTC-this.montantTotalHT,
+    totalRemise:this.montantTotalRemise,
   };
 console.log(this.selectedFournisseur);console.log(this.selectedClient);
   console.log(newCommandeDTO);

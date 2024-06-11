@@ -1,25 +1,42 @@
-<div class="col-md-6 order-md-1 order-3">
-          
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>cin</th>
-                <th>username</th>
-                <th>password</th>
-                <th>role</th>
-               
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of users">
-                <td>{{ user.cin }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.rolename }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-
-
+<div class="container shadow p-3 mb-5 bg-white rounded mt-4" style="max-width: 90%; min-width: 80%;">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Search by username" [(ngModel)]="searchTerm" (input)="searchUsers()">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>cin</th>
+                            <th>username</th>
+                            <th>password</th>
+                            <th>roles</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of paginatedUsers">
+                            <td>{{ user.cin }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.password }}</td>
+                            <td>{{ user.role.join(', ') }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" (click)="editUser(user)">Edit</button>
+                                <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let empty of emptyRows">
+                            <td colspan="5">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-secondary" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
+                <button class="btn btn-secondary" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+            </div>
+            <button class="btn btn-success mt-3 w-100"         (click)="addUser()">Ajouter User</button>
+        </div>
+    </div>
 </div>

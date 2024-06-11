@@ -46,7 +46,7 @@ export class AuthComponent {
 
             if (this.sessionStorageService) {
               this.sessionStorageService.store('roles', roles);
-              this.sessionStorageService.store('username', this.username); // Use store instead of setItem
+              this.sessionStorageService.store('username', this.username);
             } else {
               console.error('SessionStorageService is undefined'); // Debugging statement
             }
@@ -72,14 +72,15 @@ export class AuthComponent {
   getUsername(): void {
     console.log(this.cin);
   
-    this.http.get('http://localhost:8083/auth/Retrieve_Username_ByCin?cin=' + this.cin, { responseType: 'text' })
+    this.http.get<any>('http://localhost:8083/auth/Retrieve_Username_ByCin?cin=' + this.cin)
       .subscribe(
         response => {
           console.log(response);
-          this.username = response;
+          this.username = response.username;
           console.log(this.username); // Make sure username is assigned properly
           if (this.sessionStorageService) {
             this.sessionStorageService.store('username', this.username);
+            this.sessionStorageService.store('userId',response.id)
           }
         },
         error => {

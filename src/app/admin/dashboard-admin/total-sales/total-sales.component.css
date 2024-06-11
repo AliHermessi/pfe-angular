@@ -1,27 +1,41 @@
 .total {
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 90%;
-    margin: 20px auto;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  
-  .button {
-    margin: 0 10px;
-    border-radius: 5px !important;
-    padding: 5px 10px !important;
-    background-color: #007bff !important;
-    color: white !important;
-    border: none !important;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #0062cc !important;
-  }
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 90%;
+  margin: 20px auto;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.button {
+  margin: 0 10px;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  background-color: #007bff !important;
+  color: white !important;
+  border: none !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0062cc !important;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.main-chart {
+  flex: 2;
+}
+
+.pie-chart {
+  flex: 1;
+}

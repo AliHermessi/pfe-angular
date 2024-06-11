@@ -9,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class ClientFournisseurChartsComponent implements OnInit {
   suppliers: any[] = [];
   clients: any[] = [];
+  categorieIN: any[] = [];
+  categorieOUT: any[] = [];
+  categories: any[] = [];
   chartOptions: any;
   testData: any[] = [
     {
@@ -130,6 +133,7 @@ export class ClientFournisseurChartsComponent implements OnInit {
         }
       }
     };
+  console.log(this.categories);
     console.log(this.clients);
     console.log(this.suppliers);
   }
@@ -142,7 +146,6 @@ export class ClientFournisseurChartsComponent implements OnInit {
   }
 
   processPVEData(data: any[]): void {
-    console.log(data);
     const supplierData: any = {
       labels: [],
       datasets: [
@@ -161,6 +164,27 @@ export class ClientFournisseurChartsComponent implements OnInit {
         }
       ]
     };
+    const CategorieData: any = {
+      IN: {
+        labels: [],
+        datasets: [
+          {
+            data: [],
+            backgroundColor: []
+          }
+        ]
+      },
+      OUT: {
+        labels: [],
+        datasets: [
+          {
+            data: [],
+            backgroundColor: []
+          }
+        ]
+      }
+    };
+  
     data.forEach(item => {
       if (item.type_commande === 'IN') {
         const supplierIndex = supplierData.labels.findIndex((s: any) => s === item.fournisseurName);
@@ -171,6 +195,15 @@ export class ClientFournisseurChartsComponent implements OnInit {
         } else {
           supplierData.datasets[0].data[supplierIndex] += item.quantity;
         }
+  
+        const INIndex = CategorieData.IN.labels.findIndex((c: any) => c === item.categorieName);
+        if (INIndex === -1) {
+          CategorieData.IN.labels.push(item.categorieName);
+          CategorieData.IN.datasets[0].data.push(item.totalCout);
+          CategorieData.IN.datasets[0].backgroundColor.push('#' + Math.floor(Math.random()*16777215).toString(16));
+        } else {
+          CategorieData.IN.datasets[0].data[INIndex] += item.totalCout;
+        }
       } else if (item.type_commande === 'OUT') {
         const clientIndex = clientData.labels.findIndex((c: any) => c === item.clientName);
         if (clientIndex === -1) {
@@ -180,9 +213,37 @@ export class ClientFournisseurChartsComponent implements OnInit {
         } else {
           clientData.datasets[0].data[clientIndex] += item.quantity;
         }
+  
+        const OUTIndex = CategorieData.OUT.labels.findIndex((c: any) => c === item.categorieName);
+        if (OUTIndex === -1) {
+          CategorieData.OUT.labels.push(item.categorieName);
+          CategorieData.OUT.datasets[0].data.push(item.netHT - item.totalCout);
+          CategorieData.OUT.datasets[0].backgroundColor.push('#' + Math.floor(Math.random()*16777215).toString(16));
+        } else {
+          CategorieData.OUT.datasets[0].data[OUTIndex] += item.netHT - item.totalCout;
+        }
       }
     });
+  
     this.suppliers = supplierData;
     this.clients = clientData;
+    this.categorieIN = CategorieData.IN;
+    this.categorieOUT = CategorieData.OUT;
+    console.log(this.categorieIN);
+    console.log(this.categorieOUT);
   }
+
+  booleen: boolean = true;
+  categoryType: string = 'IN';
+  
+  changeCategorie(): void {
+    
+   if (this.booleen == true) 
+   {this.booleen=false}
+   else {
+     this.booleen=true
+   }
+  }
+
+
 }

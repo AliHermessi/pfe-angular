@@ -1,10 +1,72 @@
- <div class="container">
-  <ngx-charts-number-card
-  [view]="view"
-  [results]="data"
-  [cardColor]="cardColor"
-  [bandColor]="'#AAAAAA'"
-  [scheme]="colorScheme"
-  [emptyColor]="'#cccccc'">
-</ngx-charts-number-card>
- </div>
+<div class="container">
+  <!-- First Row -->
+  <div class="row">
+    <!-- Total Commande Card -->
+    <div class="col">
+      <div class="card-container" (click)="onCardClick('Total Commande')">
+        <div class="side-bar"></div>
+        <div class="content">
+          <div class="title">Total Commande</div>
+          <div class="value">{{ totalValues.totalCommande }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Facture Card -->
+    <div class="col">
+      <div class="card-container" (click)="onCardClick('Total Facture')">
+        <div class="side-bar"></div>
+        <div class="content">
+          <div class="title">Total Facture</div>
+          <div class="value">{{ totalValues.totalFacture }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Produits Card -->
+    <div class="col">
+      <div class="card-container" (click)="onCardClick('Total Produits')">
+        <div class="side-bar"></div>
+        <div class="content">
+          <div class="title">Total Produits</div>
+          <div class="value">{{ totalValues.totalProduits }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Second Row -->
+  <div class="row">
+    <!-- Total Cost Card -->
+    <div class="col">
+      <div class="card-container" (click)="onCardClick('Total Cost')">
+        <div class="side-bar"></div>
+        <div class="content">
+          <div class="title">Total Cost</div>
+          <div class="value">{{ totalValues.totalCost }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Revenue Card -->
+    <div class="col">
+      <div class="card-container" (click)="onCardClick('Total Revenue')">
+        <div class="side-bar"></div>
+        <div class="content">
+          <div class="title">Total Revenue</div>
+          <div class="value">{{ totalValues.totalRevenu }}</div>
+          <div *ngIf="totalValues.percentageChange !== undefined" class="percentage" [ngClass]="{'positive': totalValues.percentageChange > 0, 'negative': totalValues.percentageChange < 0}">
+            {{ totalValues.percentageChange > 0 ? '+' : '' }}{{ totalValues.percentageChange }}%
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Sales Card -->
+    <div class="col">
+      <div class="card-container" (click)="onCardClick('Total Sales')">
+        <div class="side-bar"></div>
+        <div class="content">
+          <div class="title">Total Sales</div>
+          <div class="value">{{ totalValues.totalSales }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,9 @@ import { SessionStorageService } from 'ngx-webstorage';
   styleUrl: './navbar-admin.component.css'
 })
 export class NavbarAdminComponent {
-
+  showNotifications: boolean = false;
+  showAllNotifications: boolean = false;
+  showDropdowns: { [key: string]: boolean } = {};
   @Input() activeTabAdmin: string = 'Dashboard';
   @Output() activeTabChange = new EventEmitter<string>();
   tab:String='';
@@ -35,4 +37,17 @@ export class NavbarAdminComponent {
 toggle(ch:string) : void {
   this.tab=ch;
 }
+
+toggleNotifications(): void {
+  this.showNotifications = !this.showNotifications;
+  this.showAllNotifications = false;
+}
+
+toggleDropdown(dropdown: string): void {
+  this.showDropdowns[dropdown] = !this.showDropdowns[dropdown];
+}
+
+
+
+
 }

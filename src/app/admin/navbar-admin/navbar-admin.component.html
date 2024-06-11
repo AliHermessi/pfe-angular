@@ -1,55 +1,58 @@
-<div class="top_navbar" >
-    <div class="logo">Foolish Dev</div>
-    <div class="menu">
-      
-  
+<div class="top_navbar">
+  <div class="logo">Dashboard</div>
+  <div class="menu">
+    <div class="notifications">
+      <button class="notifications-btn" (click)="toggleNotifications()">
+        <i class="material-icons notifications-logo">notifications</i>
+        <span class="notifications-badge">0</span>
+      </button>
+      <div class="notifications-dropdown" [ngClass]="{'show': showNotifications}">
+        <div class="notifications-header">Notifications</div>
+        <div class="notifications-list" [style.max-height]="showAllNotifications ? 'none' : '300px'">
+          <!-- Add notifications here -->
+        </div>
+        <button class="show-all-btn" (click)="showAllNotifications = true">Show All</button>
+      </div>
     </div>
+    <a class="logout-link" (click)="logout()">
+      <i class="material-icons logout-logo">logout</i>
+    </a>
   </div>
-
+</div>
 
 <div class="sidebar">
-  
-    <a class="nav-link" (click)="toggleNav('Dashboard')" >Dashboard</a>
+  <a class="nav-link" routerLink="/admin/dashboard-admin" [routerLinkActive]="'active'">Dashboard</a>
 
-    <a class="nav-link" (click)="toggle('Produit')"  >Produit</a>
-    <div class="activated-tab" *ngIf="tab === 'Produit'">
-        <a class="sub-nav-link" (click)="toggleNav('add-produit-a')">Ajouter Produits</a>
-        <a class="sub-nav-link" (click)="toggleNav('list-produit-a')">Voir Liste de Produit</a>
-    </div>
-  
-    <a class="nav-link" (click)="toggle('Commande')" >Commande</a>
-    <div *ngIf="tab === 'Commande'">
-        <a class="sub-nav-link"(click)="toggleNav('list-commande-f')">Voir Liste de Commande</a>
-        <a class="sub-nav-link" (click)="toggleNav('add-commande-f')">Creer Commande</a>
-    </div>
-  
-    <a class="nav-link" (click)="toggle('Facture')" >Facture</a>
-    <div *ngIf="tab === 'Facture'">
-        <a class="sub-nav-link"(click)="toggleNav('list-facture')">Voir Liste de Facture</a>
-        <a class="sub-nav-link" (click)="toggleNav('add-facture')">Creer Facture</a>
-    </div>
-  
-    <a class="nav-link" (click)="toggleNav('Fournisseur')" [class.active]="activeTabAdmin === 'Fournisseur'">Fournisseur</a>
-    
-  
-    <a class="nav-link" (click)="toggleNav('Categorie')" [class.active]="activeTabAdmin === 'Categorie'">Categorie</a>
-    
-   
-    <a class="nav-link" (click)="toggleNav('client')" [class.active]="activeTabAdmin === 'Client'">Client</a>
-    
-    <a class="nav-link" (click)="toggleNav('users')" [class.active]="activeTabAdmin === 'users'">Users</a>
-
-    <a class="nav-link" (click)="toggleNav('logs')" [class.active]="activeTabAdmin === 'logs'">Logs</a>
-  
-    <a class="nav-link" (click)="toggleNav('Notification')" [class.active]="activeTabAdmin === 'Notification'">Notifications</a>
-    
-  
-    
-  
-    <hr>
-    <a class="nav-link logout-link" (click)="logout()">Logout</a>
+  <a class="nav-link" (click)="toggle('Produit')">Produit</a>
+  <div class="activated-tab" *ngIf="tab === 'Produit'">
+      <a class="sub-nav-link" routerLink="/admin/add-produit-admin" [routerLinkActive]="'active'">Ajouter Produits</a>
+      <a class="sub-nav-link" routerLink="/admin/list-produit-a" [routerLinkActive]="'active'">Voir Liste de Produit</a>
   </div>
+
+  <a class="nav-link" (click)="toggle('Commande')">Commande</a>
+  <div *ngIf="tab === 'Commande'">
+      <a class="sub-nav-link" routerLink="/admin/list-commande-f" [routerLinkActive]="'active'">Voir Liste de Commande</a>
+      <a class="sub-nav-link" routerLink="/admin/add-commande-f" [routerLinkActive]="'active'">Creer Commande</a>
+  </div>
+
+  <a class="nav-link" (click)="toggle('Facture')">Facture</a>
+  <div *ngIf="tab === 'Facture'">
+      <a class="sub-nav-link" routerLink="/admin/list-facture" [routerLinkActive]="'active'">Voir Liste de Facture</a>
+      <a class="sub-nav-link" routerLink="/admin/add-facture" [routerLinkActive]="'active'">Creer Facture</a>
+  </div>
+
+  <a class="nav-link" routerLink="/admin/fournisseur" [routerLinkActive]="'active'">Fournisseur</a>
   
+  <a class="nav-link" routerLink="/admin/categorie" [routerLinkActive]="'active'">Categorie</a>
   
-    
+  <a class="nav-link" routerLink="/admin/client" [routerLinkActive]="'active'">Client</a>
   
+  <a class="nav-link" routerLink="/admin/users" [routerLinkActive]="'active'">Users</a>
+
+  <a class="nav-link" routerLink="/admin/logs" [routerLinkActive]="'active'">Logs</a>
+
+  <a class="nav-link" routerLink="/admin/messages" [routerLinkActive]="'active'">M</a>
+  
+  <hr>
+  <a class="nav-link logout-link" (click)="logout()">Logout</a>
+</div>

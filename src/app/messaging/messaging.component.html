@@ -1,0 +1,20 @@
+
+<!--
+<div>
+  <h2>Your Conversations</h2>
+  <ul>
+    <li *ngFor="let conversation of conversations" (click)="selectConversation(conversation.id)">
+      Conversation with IDs: {{ getParticipantIds(conversation) }}
+    </li>
+  </ul>
+
+  <div *ngIf="selectedConversationId">
+    <h2>Conversation Messages</h2>
+    <div *ngFor="let message of messages">
+      <strong>{{ message.sender.username }}:</strong> {{ message.content }}
+    </div>
+    <input [(ngModel)]="newMessage" name="newMessage" placeholder="Type your message..." />
+    <button (click)="sendMessage()">Send</button>
+  </div>
+</div>
+-->

@@ -7,23 +7,7 @@
 
   <div class="outer-container">
     <div class="inner-container" >
- <app-add-produit-admin *ngIf="activeTabAdmin==='add-produit-a'"></app-add-produit-admin>
- <app-dashboard-admin *ngIf="activeTabAdmin==='Dashboard'"></app-dashboard-admin>
- <app-home-admin *ngIf="activeTabAdmin==='homeAdmin'"></app-home-admin>
-
- <app-list-produit-a *ngIf="activeTabAdmin==='list-produit-a'"></app-list-produit-a>
-
- <app-logs *ngIf="activeTabAdmin==='logs'"></app-logs>
- <app-users *ngIf="activeTabAdmin==='users'"></app-users>
-
-<app-add-commande-f *ngIf="activeTabAdmin=== 'add-commande-f'"></app-add-commande-f>
-<app-list-commande-f *ngIf="activeTabAdmin === 'list-commande-f'"></app-list-commande-f>
-<app-list-facture *ngIf="activeTabAdmin=== 'list-facture'"></app-list-facture>
-
-<app-facture-page  *ngIf="activeTabAdmin ==='facture-page'"></app-facture-page>
-<app-fournisseur-page *ngIf="activeTabAdmin=== 'Fournisseur'"></app-fournisseur-page>
-<app-client-page *ngIf="activeTabAdmin=== 'Client'"></app-client-page>
-<app-categorie-page  *ngIf="activeTabAdmin === 'Categorie'"></app-categorie-page>
+      <router-outlet></router-outlet>
 
     </div>
   </div>

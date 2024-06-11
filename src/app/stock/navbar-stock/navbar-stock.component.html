@@ -1,46 +1,44 @@
-
-<div class="top_navbar" >
-  <div class="logo">Foolish Dev</div>
+<div class="top_navbar">
+  <div class="logo">Dashboard</div>
   <div class="menu">
-    
-
+    <div class="notifications">
+      <button class="notifications-btn" (click)="toggleNotifications()">
+        <i class="material-icons notifications-logo">notifications</i>
+        <span class="notifications-badge">{{ notifications.length }}</span> <!-- Display the number of notifications -->
+      </button>
+      <div class="notifications-dropdown" [ngClass]="{'show': showNotifications}">
+        <div class="notifications-header">Notifications</div>
+        <div class="notifications-list" [style.max-height]="showAllNotifications ? 'none' : '300px'">
+          <div class="notification" *ngFor="let notification of notifications">{{ notification.message }}</div> <!-- Display notifications -->
+        </div>
+        <button class="show-all-btn" (click)="showAllNotifications = true">Show All</button>
+      </div>
+    </div>
+    <a class="logout-link" (click)="logout()">
+      <i class="material-icons logout-logo">logout</i>
+    </a>
   </div>
 </div>
+
 
 <div class="sidebar">
-  <a class="nav-link" (click)="toggleNav('home')" [class.active]="activeTab === 'home'">Home</a>  
+  <a class="nav-link"  routerLink="/stock/home-stock" routerLinkActive="active">Home</a>  
 
- 
-  <a class="nav-link" (click)="activeTab === 'Produit'"  [class.active]="activeTab === 'Produit'">Produit</a>
+  <a class="nav-link" (click)="toggleNav('Produit')"  routerLinkActive="active">Produit</a>
   <div *ngIf="activeTab === 'Produit'">
-      <a class="sub-nav-link" (click)="toggleNav('add-produit')">Ajouter Produits</a>
-      <a class="sub-nav-link" (click)="toggleNav('list-produit')">Voir Liste de Produit</a>
+      <a class="sub-nav-link"  routerLink="/stock/ajout-stock" routerLinkActive="active">Ajouter Produits</a>
+      <a class="sub-nav-link"  routerLink="/stock/list-stock" routerLinkActive="active">Voir Liste de Produit</a>
   </div>
 
-  <a class="nav-link" (click)="toggleNav('Commande')" [class.active]="activeTab === 'Commande'">Commande</a>
+  <a class="nav-link" (click)="toggleNav('Commande')"  routerLinkActive="active">Commande</a>
   <div *ngIf="activeTab === 'Commande'">
-      <a class="sub-nav-link"(click)="toggleNav('list-commande')">Voir Liste de Commande</a>
-      <a class="sub-nav-link" (click)="toggleNav('add-commande')">Creer Commande</a>
+      <a class="sub-nav-link"  routerLink="/stock/commande-stock" routerLinkActive="active">Voir Liste de Commande</a>
+      <a class="sub-nav-link"  routerLink="/stock/add-commande" routerLinkActive="active">Creer Commande</a>
   </div>
 
-
-  <a class="nav-link" (click)="toggleNav('Fournisseur')" [class.active]="activeTab === 'Fournisseur'">Fournisseur</a>
+  <a class="nav-link"  routerLink="/stock/fournisseur" routerLinkActive="active">Fournisseur</a>
+  <a class="nav-link"  routerLink="/stock/categorie" routerLinkActive="active">Categorie</a>
+  <a class="nav-link"  routerLink="/stock/client" routerLinkActive="active">Client</a>
   
 
-  <a class="nav-link" (click)="toggleNav('Categorie')" [class.active]="activeTab === 'Categorie'">Categorie</a>
-  
- 
-  <a class="nav-link" (click)="toggleNav('Client')" [class.active]="activeTab === 'Client'">Client</a>
-  
-
-  <a class="nav-link" (click)="toggleNav('Notification')" [class.active]="activeTab === 'Notification'">Notifications</a>
-  
-
-  <a class="nav-link" (click)="toggleNav('Contacter Admin')" [class.active]="activeTab === 'Contacter Admin'">Contacter Admin</a>
-  
-
-  <a class="nav-link logout-link" (click)="logout()">Logout</a>
 </div>
-
-
-  

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-list-produit-a',
@@ -26,7 +27,7 @@ startDate!: Date;
   isArrowUp: boolean = false;
   showFilters: boolean = false;
 selectedProduits:any [] = [] ;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private sharedService: SharedService, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchProduits();
@@ -243,9 +244,10 @@ updateTotalpage(number:number) : void {
   }
 
   
-creerCommande():void{
-
-}
+  creerCommande(): void {
+    this.sharedService.setSelectedProduits(this.selectedProduits);
+    this.router.navigate(['/admin/add-commande-f']); // Navigate to the add-commande-f page
+  }
 
 removeSelectedProduit(selectedProduit: any): void {
   const index = this.selectedProduits.findIndex(p => p.id === selectedProduit.id);

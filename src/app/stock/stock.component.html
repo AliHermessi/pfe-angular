@@ -1,41 +1,22 @@
 <app-navbar-stock [activeTab]="activeTab" (activeTabChange)="toggleNav($event)"></app-navbar-stock>
 
-
-
-
-  <div class="outer-container">
-    <div class="inner-container">
-
-      <nav aria-label="breadcrumb" *ngIf="activeTab !== 'home'"> 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a (click)="toggleNav('home')">Home</a></li>
-            <li class="breadcrumb-item" *ngIf="activeTab === 'list-produit'"><a (click)="toggleNav('list-produit')">List-Produit</a></li>
-            <li class="breadcrumb-item" *ngIf="activeTab === 'list-commande'"><a (click)="toggleNav('list-commande')">List-Commande</a></li>
-            <li class="breadcrumb-item" *ngIf="activeTab === 'add-commande'"><a (click)="toggleNav('add-commande')">Ajout-Commande</a></li>
-            <li class="breadcrumb-item" *ngIf="activeTab === 'add-produit'"><a (click)="toggleNav('add-produit')">Ajout-Produits</a></li>
-            <li class="breadcrumb-item" *ngIf="activeTab === 'Fournisseur'"><a (click)="toggleNav('Fournisseur')">Fournisseurs</a></li>
-            <li class="breadcrumb-item" *ngIf="activeTab === 'Client'"><a (click)="toggleNav('Client')">Clients</a></li>
-            <li class="breadcrumb-item" *ngIf="activeTab === 'Categorie'"><a (click)="toggleNav('Categorie')">Categories</a></li>
-            
-            <li class="breadcrumb-item active" aria-current="page">{{ activeTab }}</li>
-        </ol>
+<div class="outer-container">
+  <div class="inner-container">
+    <nav aria-label="breadcrumb" *ngIf="activeTab !== 'home'"> 
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/stock/home-stock">Home</a></li>
+        <li class="breadcrumb-item" *ngIf="activeTab === 'list-produit'"><a routerLink="/stock/list-stock">List-Produit</a></li>
+        <li class="breadcrumb-item" *ngIf="activeTab === 'list-commande'"><a routerLink="/stock/commande-stock">List-Commande</a></li>
+        <li class="breadcrumb-item" *ngIf="activeTab === 'add-commande'"><a routerLink="/stock/add-commande">Ajout-Commande</a></li>
+        <li class="breadcrumb-item" *ngIf="activeTab === 'add-produit'"><a routerLink="/stock/ajout-stock">Ajout-Produits</a></li>
+        <li class="breadcrumb-item" *ngIf="activeTab === 'Fournisseur'"><a routerLink="/stock/fournisseur">Fournisseurs</a></li>
+        <li class="breadcrumb-item" *ngIf="activeTab === 'Client'"><a routerLink="/stock/client">Clients</a></li>
+        <li class="breadcrumb-item" *ngIf="activeTab === 'Categorie'"><a routerLink="/stock/categorie">Categories</a></li>
+        
+        <li class="breadcrumb-item active" aria-current="page">{{ activeTab }}</li>
+      </ol>
     </nav>
-    
 
-      
-      <app-list-stock *ngIf="activeTab === 'list-produit'"></app-list-stock>
-      <app-home-stock *ngIf="activeTab === 'home'"></app-home-stock>
-      <app-commande-stock *ngIf="activeTab === 'list-commande'"></app-commande-stock>
-      <app-add-commande *ngIf="activeTab === 'add-commande'"></app-add-commande>
-      <app-ajout-stock   *ngIf="activeTab === 'add-produit'"></app-ajout-stock>
-      <app-fournisseur-page  *ngIf="activeTab === 'Fournisseur'"></app-fournisseur-page>
-      <app-client-page  *ngIf="activeTab === 'Client'"></app-client-page>
-      <app-categorie-page  *ngIf="activeTab === 'Categorie'"></app-categorie-page>
-      
-    </div>
+    <router-outlet></router-outlet>
   </div>
-
-  
-      
-            
-      
+</div>

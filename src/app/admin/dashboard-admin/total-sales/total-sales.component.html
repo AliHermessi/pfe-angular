@@ -1,9 +1,18 @@
-<div class="total" style="display: block;">
-     <div style="text-align: center; margin-bottom: 20px;"> 
-        <button pButton type="button" label="Semaine dernier" (click)="showLastDay()"></button>
-         <button pButton type="button" label="Mois dernier" (click)="showLastMonth()"></button> 
-         <button pButton type="button" label="Année dernier" (click)="showLastYear()"></button>
-         </div> 
-
-         <p-chart type="line" [data]="chartData" [options]="comboChartOptions"></p-chart> 
-        </div>
+<div class="total">
+   <div class="button-group">
+     <button class="button" (click)="showLastDay()">Semaine dernier</button>
+     <button class="button" (click)="showLastMonth()">Mois dernier</button>
+     <button class="button" (click)="showLastYear()">Année dernier</button>
+   </div>
+ 
+   <div class="chart-container">
+     <div class="chart" style="width: 66.666%; float: left;">
+       <p-chart type="line" [data]="chartData" [options]="comboChartOptions"></p-chart>
+     </div>
+ 
+     <div class="chart" style="width: 33.333%; float: right;">
+       <p-chart type="pie" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
+     </div>
+   </div>
+ </div>
+ 

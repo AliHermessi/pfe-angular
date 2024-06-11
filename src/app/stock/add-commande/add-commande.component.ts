@@ -4,6 +4,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Router } from '@angular/router';
 import { Commande } from '../../models/commande.model';
 import { ElementFacture } from '../../models/element-facture.model';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-add-commande',
@@ -42,11 +43,36 @@ export class AddCommandeComponent implements OnInit {
   selectedCodeCommande: string='';
   showDropdown: boolean = false;
   codeCommandeList: string[]=[];
+  selectedProduits:any[]=[];
+  constructor(private http: HttpClient,private sharedService: SharedService, private router: Router) {}
 
-  constructor(private http: HttpClient, private router: Router) {}
+  ngOnInit(): void {
+    this.sharedService.selectedProduits$.subscribe(produits => {
+    this.selectedProduits = produits;
+  });
+  this.processSelectedProduits(this.selectedProduits);
+}
+processSelectedProduits(produits: any[]): void {
+ 
+  produits.forEach(produit => {
+    this.ListelementFactures.push({
+      id:produit.id,
+      refProduit: produit.barcode,
+      libelle: produit.libelle,
+      quantity: 1,
+      price: produit.prix,
+      tax:produit.tax,
+      netHT: 0,
+      remise:0,
+      netTTC:0,
+    });
+  });
+  
+  
+  // Log or perform any further processing with produitsList
+  console.log('Produits List:', this.produitsList);
 
-  ngOnInit(): void {}
-
+}
   
 
   
