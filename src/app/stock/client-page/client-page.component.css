@@ -1,3 +1,74 @@
+.container {
+  margin-top: 30px;
+}
+
+.title {
+  margin-bottom: 20px;
+  color: #33404D;
+  font-weight: bold;
+  text-align: center;
+}
+
+.table {
+  margin-bottom: 20px;
+}
+
 .form-container {
-    border-right: 1px solid #ccc; /* You can adjust the color and width of the border */
-  }
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.was-validated .form-control:invalid:focus {
+  border-color: #dc3545;
+}
+
+.was-validated .form-control:valid:focus {
+  border-color: #28a745;
+}
+
+.alert {
+  margin-top: 20px;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.needs-validation .form-control:invalid:focus {
+  border-color: #dc3545;
+}
+
+.needs-validation .form-control:valid:focus {
+  border-color: #28a745;
+}
+.map-container {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.map {
+  height: 250px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.blur {
+  filter: blur(1px);
+  
+}
+ 
+
+
+
+.popup-map {
+  height: 100%; /* Bigger height for the popup */
+  width: 100%;
+}
+.is-invalid {
+  border-color: red;
+}

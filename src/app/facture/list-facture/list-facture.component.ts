@@ -81,27 +81,9 @@ export class ListFactureComponent implements OnInit {
         this.user = this.sessionStorageService.retrieve('username'); 
     }
     const url = `http://localhost:8083/factures/generatePdf/${id}?user=${this.user}`;
-    this.http.get(url, { responseType: 'blob' }).subscribe(
-        (response) => {
-            const blob = new Blob([response], { type: 'application/pdf' });
-            const objectUrl = URL.createObjectURL(blob);
-            
-            // Attempt to open the PDF in a new window
-            const newWindow = window.open(objectUrl, '_blank');
-            
-            // Check if the new window was successfully opened
-            if (newWindow) {
-                // Revoke the object URL to free up memory
-                newWindow.onload = () => URL.revokeObjectURL(objectUrl);
-            } else {
-                console.error('Failed to open the PDF in a new window');
-            }
-        },
-        (error) => {
-            console.error(error);
-        }
-    );
+    window.location.href = url;
 }
+
 
   
 

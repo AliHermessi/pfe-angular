@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12 ">
             <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Search by username" [(ngModel)]="searchTerm" (input)="searchUsers()">
+                <input type="text" class="form-control" placeholder="Rechercher par nom d'utilisateur" [(ngModel)]="searchTerm" (input)="searchUsers()">
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -22,21 +22,21 @@
                             <td>{{ user.password }}</td>
                             <td>{{ user.role.join(', ') }}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm" (click)="editUser(user)">Edit</button>
-                                <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Delete</button>
+                                <button class="btn btn-primary btn-sm" (click)="editUser(user)">Editer</button>
+                                <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Supprimer</button>
                             </td>
                         </tr>
                         <tr *ngFor="let empty of emptyRows">
-                            <td colspan="5">&nbsp;</td>
+                            <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-between">
-                <button class="btn btn-secondary" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
-                <button class="btn btn-secondary" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+                <button class="btn btn-secondary" [disabled]="currentPage === 1" (click)="previousPage()">Précédent</button>
+                <button class="btn btn-secondary" [disabled]="currentPage === totalPages" (click)="nextPage()"> Suivant</button>
             </div>
-            <button class="btn btn-success mt-3 w-100"         (click)="addUser()">Ajouter User</button>
+            <button class="btn btn-success mt-3 w-100"         (click)="addUser()">Ajouter Utilisateur</button>
         </div>
     </div>
 </div>

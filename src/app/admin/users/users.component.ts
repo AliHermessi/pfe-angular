@@ -172,10 +172,39 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  deleteUser(userId: number): void {
-    this.http.delete(`http://localhost:8083/users/delete/${userId}`)
-      .subscribe(() => {
-        this.fetchUsers();
-      });
-  }
+
+deleteUser(userId: number): void {
+  Swal.fire({
+    title: 'Êtes-vous sûr ?',
+    text: 'Voulez-vous vraiment supprimer cet utilisateur ?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Oui, supprimer !',
+    cancelButtonText: 'Annuler'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.http.delete(`http://localhost:8083/users/delete/${userId}`)
+        .subscribe(
+          () => {
+            Swal.fire(
+              'Supprimé !',
+              'L\'utilisateur a été supprimé avec succès.',
+              'success'
+            );
+            this.fetchUsers();
+          },
+          (error) => {
+            Swal.fire(
+              'Erreur !',
+              'Une erreur s\'est produite lors de la suppression de l\'utilisateur.',
+              'error'
+            );
+          }
+        );
+    }
+  });
+}
+
 }

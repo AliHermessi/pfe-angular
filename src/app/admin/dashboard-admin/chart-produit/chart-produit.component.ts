@@ -70,7 +70,6 @@ export class ChartProduitComponent implements OnInit {
   fetchPVEData(produitId: number, startDate: Date, endDate: Date): void {
     this.http.get<any[]>('http://localhost:8083/dashboard/AllPVE')
       .subscribe(data => {
-        console.log('Fetched PVE Data:', data);
         this.processPVEData(data, produitId, startDate, endDate);
       });
   }
@@ -93,14 +92,12 @@ export class ChartProduitComponent implements OnInit {
     console.log('Initialized Daily Sales:', dailySales);
 
     data.forEach(pve => {
-      console.log(pve.produitId === produitId);
-      console.log('pve.produitId:', pve.produitId);
-      console.log('produitId:', produitId);
+      
       if (pve.produitId.toString().trim() === produitId.toString().trim()) {
             const saleDate = new Date(pve.date);
             const saleDateIndex = dailySales.findIndex(d => d.date.toDateString() === saleDate.toDateString());
             if (saleDateIndex >= 0) {
-                dailySales[saleDateIndex].total += pve.total;
+                dailySales[saleDateIndex].total += (pve.netHT * pve.quantity) - (pve.cout * pve.quantity);
                 dailySales[saleDateIndex].totalCount += pve.quantity; // Assuming quantity is the total count
                 dailySales[saleDateIndex].netHT += pve.netHT;
             }
@@ -113,7 +110,7 @@ export class ChartProduitComponent implements OnInit {
         labels: dailySales.map(s => s.date), // Use ISOString to ensure consistent format
         datasets: [
             {
-                type: 'bar',
+                type: 'line',
                 label: 'Total Sales',
                 data: dailySales.map(s => s.total),
                 borderColor: '#5AA454',
@@ -138,7 +135,6 @@ export class ChartProduitComponent implements OnInit {
         ]
     };
 
-    console.log('Chart Data:', this.chartData);
 }
 
 

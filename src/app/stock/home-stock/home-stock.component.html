@@ -1,1 +1,24 @@
-<p>home-stock works!</p>
+<div class="container">
+    <h1 class="title">Bienvenue, {{ username }}</h1>
+    
+    <div class="card-container">
+      <div class="card" (click)="onCardClick('produits')">
+        <i class="material-icons">category</i>
+        <h2>Produits</h2>
+        <p>Nombre de produits : {{ produits.length }}</p>
+      </div>
+  
+      <div class="card" (click)="onCardClick('categories')">
+        <i class="material-icons">widgets</i> 
+        <h2>Catégories</h2>
+        <p>Nombre de catégories : {{ categories.length }}</p>
+      </div>
+  
+      <div class="card" (click)="onCardClick('fournisseurs')">
+        <i class="material-icons">local_shipping</i>
+                <h2>Fournisseurs</h2>
+        <p>Nombre de fournisseurs : {{ fournisseurs.length }}</p>
+      </div>
+    </div>
+  </div>
+  

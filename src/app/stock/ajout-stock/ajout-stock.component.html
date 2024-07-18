@@ -1,6 +1,6 @@
 <div class="containerr">
 
-  <label for="Commande" class="form-label">1. Choisir le commande Pour le Retour:</label>
+  <label for="Commande" class="label-cs">1. Choisir le commande Pour le Retour:</label>
   <div class="custom-ng-select" (click)="toggleCommandeDropdown($event)">
     <div class="input-container">
       <input class="form-control" type="text" [(ngModel)]="selectedCodeCommande" (input)="searchCommande(selectedCodeCommande)"  placeholder="Search...">
@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <label for="element" class="form-label">2. Choisir le Produit:</label>
+  <label for="element" class="label-cs">2. Choisir le Produit:</label>
   <div class="custom-ng-select" [class.disabled]="!selectedCodeCommande" (click)="toggleElementFactureDropdown($event)">
     <div class="input-container">
       <input class="form-control" type="text" [(ngModel)]="selectedElement" (input)="searchProduct(selectedElement)"  placeholder="Search..." [readonly]="!selectedCodeCommande">
@@ -33,10 +33,10 @@
   <!-- Status Radio Buttons -->
   <div class="mb-3" >
     <div class="mb-3">
-      <label for="quantity" class="form-label">3. Quantity:</label>
+      <label for="quantity" class="label-cs">3. Quantity:</label>
       <input type="number" id="quantity" [(ngModel)]="quantity" name="quantity" class="form-control" [min]="1" [max]="element.quantity" required [readonly]="!selectedElement" >
     </div>
-    <label class="form-label">4.</label>
+    <label class="label-cs">4.Status:</label>
     <div class="form-check" *ngFor="let statusOption of ['RETOURNEE', 'ENDOMMAGE', 'CUSTOM']" >
       <input class="form-check-input" type="radio" name="status" [id]="statusOption" [value]="statusOption" [(ngModel)]="status" [readonly]="!selectedElement">
       <label class="form-check-label" [for]="statusOption">{{ statusOption }}</label>
@@ -45,13 +45,13 @@
 
   <!-- Custom Status Input -->
   <div *ngIf="status === 'CUSTOM'" class="mb-3" >
-    <label for="customStatus" class="form-label">Custom Status:</label>
+    <label for="customStatus" class="label-cs">Custom Status:</label>
     <input type="text" id="customStatus" [(ngModel)]="status" name="customStatus" class="form-control" required [readonly]="!selectedElement">
   </div>
 
   <!-- Description Textarea -->
   <div class="mb-3">
-    <label for="description" class="form-label">5. Description:</label>
+    <label for="description" class="label-cs">5. Description:</label>
     <textarea id="description" [(ngModel)]="description" name="description" class="form-control" required [readonly]="!selectedElement"></textarea>
   </div>
 

@@ -1,20 +1,18 @@
-<div class="containerr">
-    <div class="chart-container">
-      <div class="chart-header">Fournisseurs</div>
-      <p-chart type="doughnut" [data]="suppliers" [options]="chartOptions"></p-chart>
-    </div>
-  
-    <div class="chart-container">
-      <div class="chart-header">Clients</div>
-      <p-chart type="doughnut" [data]="clients" [options]="chartOptions"></p-chart>
-    </div>
+  <div class="containerr">
+      <div class="chart-container">
+        <div class="chart-header">Fournisseurs</div>
+        <p-chart type="doughnut" [data]="suppliers" [options]="chartOptions"></p-chart>
+      </div>
+    
+      <div class="chart-container">
+        <div class="chart-header">Clients</div>
+        <p-chart type="doughnut" [data]="clients" [options]="chartOptions"></p-chart>
+      </div>
 
-    <div class="chart-container">
-      <div class="chart-header">Categories</div>
-      <button class="btn btn-primary btn-sm mr-2" (click)="changeCategorie()">cost/revenu</button>
-      <p-chart type="doughnut" [data]="categorieIN" [options]="chartOptions" *ngIf="booleen === true"></p-chart>
-      <p-chart type="doughnut" [data]="categorieOUT" [options]="chartOptions" *ngIf="booleen === false"></p-chart>
+      <div class="chart-container">
+        <div class="chart-header">Categories</div>
+        <p-chart type="doughnut" [data]="categorieOUT" [options]="chartOptions" ></p-chart>
+      </div>
+    
     </div>
-  
-  </div>
-  
+    

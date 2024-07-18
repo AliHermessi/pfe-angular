@@ -10,7 +10,7 @@ import { NotificationService } from '../../shared/notification.service';
   styleUrls: ['./navbar-stock.component.css']
 })
 export class NavbarStockComponent implements OnInit {
-  @Input() activeTab: string = 'Dashboard';
+  @Input() activeTab: string = 'home-stock';
   @Output() activeTabChange = new EventEmitter<string>();
   tab: String = '';
   showNotifications: boolean = false;
@@ -31,19 +31,6 @@ export class NavbarStockComponent implements OnInit {
     this.userRoles = this.sessionStorageService.retrieve('roles') || [];
     console.log(this.userRoles);
   
-    this.notificationService.connect().subscribe((notification: { roles: string | string[], message: string }) => {
-      // Extracting the text before the first "-"
-      const notificationText = notification.message.split("-")[0].trim();
-      
-      // Creating a new notification object with updated message
-      const updatedNotification = { ...notification, message: notificationText };
-      
-      // Pushing the updated notification to the notifications array
-      this.notifications.push(updatedNotification);
-      
-      // Playing the notification sound
-      this.playNotificationSound();
-    });
   }
   
 
@@ -62,22 +49,9 @@ export class NavbarStockComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  toggleNotifications(): void {
-    this.showNotifications = !this.showNotifications;
-    this.showAllNotifications = false;
-  }
+  
 
-  playNotificationSound(): void {
-    // You can add the path to your notification sound file here
-    // For now, we'll just use an empty string
-    const audio = new Audio('assets/mixkit-message-pop-alert-2354.mp3');
-    audio.play();
-  }
 
-  createNotification(message: string, roles: string[]): void {
-    const notification = { message, roles, entityName: 'Produit' };
-    this.notificationService.createNotification(notification).subscribe();
-  }
 
   toggleDropdown(dropdown: string): void {
     this.showDropdowns[dropdown] = !this.showDropdowns[dropdown];

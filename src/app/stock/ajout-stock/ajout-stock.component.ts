@@ -69,14 +69,20 @@ export class AjoutStockComponent {
 
   selectProduct(product: any): void {
     this.selectedElement = product.libelle;
-    this.element=product;
-    console.log("Product selected:", product);
+    this.element=product.elementFactureId;
+    console.log(product);
+    console.log(this.element)
 }
 
 selectCommande(ch: string): void {
     this.selectedCodeCommande = ch;
+    for (let i = 0; i < this.commandes.length; i++) {
+      if (this.commandes[i].codeCommande === ch) {
+        this.commande = this.commandes[i];
+        break; // Stop searching once found
+      }
+    }
     this.updateElementFactures();
-    console.log("Command selected:", ch);
 }
 
 
@@ -138,16 +144,17 @@ addProduit(): void {
     cancelButtonText: 'Non'
   }).then((result) => {
     if (result.isConfirmed) {
-      const produit = {
-        ...this.element,
-        quantity: this.quantity
+      const requestPayload = {
+        commandeId: this.commande.id,
+        elementFactureId: this.element,
+        description: this.description,
+        quantity: this.quantity,
+        status: this.status
       };
-      const params = new HttpParams()
-        .set('refProduit', produit.refProduit)
-        .set('libelle', produit.libelle)
-        .set('quantite', produit.quantity.toString())
-        .set('ch', this.status);
-      this.http.get<any>('http://localhost:8083/produits/updateReturned', { params })
+      console.log(requestPayload);
+
+
+      this.http.post<any>('http://localhost:8083/commandes/updateStatusAndQuantity', requestPayload)
         .subscribe(
           response => {
             Swal.fire({
@@ -158,11 +165,10 @@ addProduit(): void {
             });
           },
           error => {
-            console.error('Error adding produit:', error);
             Swal.fire({
-              title: 'Erreur',
-              text: 'Une erreur est survenue lors de l\'ajout du produit.',
-              icon: 'error',
+              title: 'Enregistré!',
+              text: 'Le produit a été ajouté avec succès.',
+              icon: 'success',
               confirmButtonText: 'OK'
             });
           }

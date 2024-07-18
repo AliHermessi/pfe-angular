@@ -28,6 +28,8 @@ import { HomeStockComponent } from './stock/home-stock/home-stock.component';
 import { ListStockComponent } from './stock/list-stock/list-stock.component';
 import { NavbarStockComponent } from './stock/navbar-stock/navbar-stock.component';
 import { MessagingComponent } from './messaging/messaging.component';
+import { ReturnComponent } from './stock/return/return.component';
+import { HomeFactureComponent } from './facture/home-facture/home-facture.component';
 
 
 const routes: Routes = [
@@ -36,7 +38,7 @@ const routes: Routes = [
   // Authentication route
   { path: 'login', component: AuthComponent },
   // Facture module routes
-  { path: 'facture', component: FactureComponent, canActivate: [AuthGuard], data: { roles: ['FACTURE','ADMIN'] },
+  { path: 'facture', component: FactureComponent, canActivate: [AuthGuard], data: { roles: ['FACTURE'] },
     children: [
       { path: 'add-commande-f', component: AddCommandeFComponent },
       { path: 'list-commande-f', component: ListCommandeFComponent },
@@ -45,7 +47,8 @@ const routes: Routes = [
       { path: 'fournisseur', component: FournisseurPageComponent },
       { path: 'categorie', component: CategoriePageComponent },
       { path: 'client', component: ClientPageComponent },
-      { path: 'messages', component: MessagingComponent}
+      { path: 'messages', component: MessagingComponent},
+      {path: 'home-facture', component: HomeFactureComponent}
     ]
   },
   // Admin module routes
@@ -83,8 +86,8 @@ const routes: Routes = [
       { path: 'home-stock', component: HomeStockComponent },
       { path: 'list-stock', component: ListStockComponent },
       { path: 'navbar-stock', component: NavbarStockComponent },
-      { path: 'messages', component: MessagingComponent}
-
+      { path: 'messages', component: MessagingComponent},
+      { path: 'retourné', component: ReturnComponent}
     ]
   }
 ];

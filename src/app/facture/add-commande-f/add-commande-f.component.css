@@ -1,0 +1,30 @@
+.map-container {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.map {
+  height: 250px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.blur {
+  filter: blur(1px);
+  
+}
+ 
+label{
+  font-weight: bold;
+  font-size: medium;
+}
+
+
+.popup-map {
+  height: 100%; /* Bigger height for the popup */
+  width: 100%;
+}
+.is-invalid {
+  border-color: red;
+}

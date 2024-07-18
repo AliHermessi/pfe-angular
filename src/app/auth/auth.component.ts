@@ -13,7 +13,6 @@ export class AuthComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
-  role: any[] = [];
 
   constructor(
     private http: HttpClient,
@@ -21,74 +20,70 @@ export class AuthComponent {
     private sessionStorageService: SessionStorageService
   ) { }
 
-  validateForm() {
-    if (!this.cin || !this.password) {
-      this.errorMessage = 'CIN and Password are required.';
-    } else {
-      this.errorMessage = '';
-      this.login();
-    }
-  }
-
   login() {
     const user = { cin: this.cin, password: this.password };
-    console.log(user);
 
     this.http.post<any>('http://localhost:8083/auth/login', user)
       .subscribe(
         response => {
-          console.log('Entire Response:', response);  // Log the entire response
           this.getUsername();
           if (response) {
             const roles = response;
-
-            console.log('Roles:', roles);  // Log the roles
-
             if (this.sessionStorageService) {
               this.sessionStorageService.store('roles', roles);
               this.sessionStorageService.store('username', this.username);
-            } else {
-              console.error('SessionStorageService is undefined'); // Debugging statement
             }
-
-
             if (roles.includes('ADMIN')) {
               this.router.navigate(['/admin']);
             } else if (roles.includes('FACTURE')) {
               this.router.navigate(['/facture']);
             } else if (roles.includes('STOCK')) {
               this.router.navigate(['/stock']);
-            } 
+            }
           } else {
-            this.errorMessage = 'Invalid credentials';
+            this.errorMessage = 'Informations incorrectes. Veuillez vérifier votre CIN et votre mot de passe.';
           }
         },
         error => {
-          console.error('login problem:', error);
-          this.errorMessage = 'Invalid credentials';
+          console.error('Erreur de connexion:', error);
+          this.errorMessage = 'Erreur de connexion. Veuillez réessayer plus tard.';
         }
       );
   }
+
   getUsername(): void {
-    console.log(this.cin);
-  
     this.http.get<any>('http://localhost:8083/auth/Retrieve_Username_ByCin?cin=' + this.cin)
       .subscribe(
         response => {
-          console.log(response);
           this.username = response.username;
-          console.log(this.username); // Make sure username is assigned properly
           if (this.sessionStorageService) {
             this.sessionStorageService.store('username', this.username);
-            this.sessionStorageService.store('userId',response.id)
+            this.sessionStorageService.store('userId', response.id);
           }
         },
         error => {
-          console.error('Error retrieving username:', error);
+          console.error('Erreur lors de la récupération du nom d\'utilisateur:', error);
         }
       );
   }
-  
-  
-  
+
+  handleEnter(event: Event) {
+    if ((event as KeyboardEvent).key === 'Enter') {
+      event.preventDefault();
+      this.validateForm();
+    }
+  }
+  validateForm() {
+    if (!this.cin || !this.password) {
+      this.errorMessage = 'CIN and Password are required.';
+    } else if (!this.cin){
+      this.errorMessage = 'CIN is required.';
+    }else if(!this.password){
+      this.errorMessage = 'Password is required.';
+    }else{
+      this.errorMessage = '';
+      this.login();
+    }
+  }
+
 }

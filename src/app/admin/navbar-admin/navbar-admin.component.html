@@ -1,58 +1,67 @@
 <div class="top_navbar">
-  <div class="logo">Dashboard</div>
+  <div class="logo">APP</div>
   <div class="menu">
-    <div class="notifications">
-      <button class="notifications-btn" (click)="toggleNotifications()">
-        <i class="material-icons notifications-logo">notifications</i>
-        <span class="notifications-badge">0</span>
-      </button>
-      <div class="notifications-dropdown" [ngClass]="{'show': showNotifications}">
-        <div class="notifications-header">Notifications</div>
-        <div class="notifications-list" [style.max-height]="showAllNotifications ? 'none' : '300px'">
-          <!-- Add notifications here -->
-        </div>
-        <button class="show-all-btn" (click)="showAllNotifications = true">Show All</button>
-      </div>
-    </div>
     <a class="logout-link" (click)="logout()">
-      <i class="material-icons logout-logo">logout</i>
+      <i class="material-icons logout-logo">logout</i> Logout
     </a>
   </div>
 </div>
 
 <div class="sidebar">
-  <a class="nav-link" routerLink="/admin/dashboard-admin" [routerLinkActive]="'active'">Dashboard</a>
+  <a class="nav-link" routerLink="/admin/dashboard-admin" [routerLinkActive]="'active'">
+    <i class="material-icons">dashboard</i> Dashboard
+  </a>
 
-  <a class="nav-link" (click)="toggle('Produit')">Produit</a>
-  <div class="activated-tab" *ngIf="tab === 'Produit'">
-      <a class="sub-nav-link" routerLink="/admin/add-produit-admin" [routerLinkActive]="'active'">Ajouter Produits</a>
-      <a class="sub-nav-link" routerLink="/admin/list-produit-a" [routerLinkActive]="'active'">Voir Liste de Produit</a>
+  <a class="nav-link" (click)="toggleNav('Produit')" [class.active]="activeTabAdmin === 'Produit'">
+    <i class="material-icons">category</i> Produit
+  </a>
+  <div class="activated-tab" *ngIf="activeTabAdmin === 'Produit'">
+    <a class="sub-nav-link" routerLink="/admin/add-produit-admin" [routerLinkActive]="'active'">
+      Ajouter Produits
+    </a>
+    <a class="sub-nav-link" routerLink="/admin/list-produit-a" [routerLinkActive]="'active'">
+      Voir Liste de Produit
+    </a>
   </div>
 
-  <a class="nav-link" (click)="toggle('Commande')">Commande</a>
-  <div *ngIf="tab === 'Commande'">
-      <a class="sub-nav-link" routerLink="/admin/list-commande-f" [routerLinkActive]="'active'">Voir Liste de Commande</a>
-      <a class="sub-nav-link" routerLink="/admin/add-commande-f" [routerLinkActive]="'active'">Creer Commande</a>
+  <a class="nav-link" (click)="toggleNav('Commande')" [class.active]="activeTabAdmin === 'Commande'">
+    <i class="material-icons">shopping_cart</i> Commande
+  </a>
+  <div class="activated-tab" *ngIf="activeTabAdmin === 'Commande'">
+    <a class="sub-nav-link" routerLink="/admin/list-commande-f" [routerLinkActive]="'active'">
+      Voir Liste de Commande
+    </a>
+    <a class="sub-nav-link" routerLink="/admin/add-commande-f" [routerLinkActive]="'active'">
+      Créer Commande
+    </a>
   </div>
 
-  <a class="nav-link" (click)="toggle('Facture')">Facture</a>
-  <div *ngIf="tab === 'Facture'">
-      <a class="sub-nav-link" routerLink="/admin/list-facture" [routerLinkActive]="'active'">Voir Liste de Facture</a>
-      <a class="sub-nav-link" routerLink="/admin/add-facture" [routerLinkActive]="'active'">Creer Facture</a>
+  <a class="nav-link" (click)="toggleNav('Facture')" [class.active]="activeTabAdmin === 'Facture'">
+    <i class="material-icons">receipt</i> Facture
+  </a>
+  <div class="activated-tab" *ngIf="activeTabAdmin === 'Facture'">
+    <a class="sub-nav-link" routerLink="/admin/list-facture" [routerLinkActive]="'active'">
+      Voir Liste de Facture
+    </a>
   </div>
 
-  <a class="nav-link" routerLink="/admin/fournisseur" [routerLinkActive]="'active'">Fournisseur</a>
-  
-  <a class="nav-link" routerLink="/admin/categorie" [routerLinkActive]="'active'">Categorie</a>
-  
-  <a class="nav-link" routerLink="/admin/client" [routerLinkActive]="'active'">Client</a>
-  
-  <a class="nav-link" routerLink="/admin/users" [routerLinkActive]="'active'">Users</a>
+  <a class="nav-link" routerLink="/admin/fournisseur" [routerLinkActive]="'active'">
+    <i class="material-icons">local_shipping</i> Fournisseur
+  </a>
 
-  <a class="nav-link" routerLink="/admin/logs" [routerLinkActive]="'active'">Logs</a>
+  <a class="nav-link" routerLink="/admin/categorie" [routerLinkActive]="'active'">
+    <i class="material-icons">category</i> Categorie
+  </a>
 
-  <a class="nav-link" routerLink="/admin/messages" [routerLinkActive]="'active'">M</a>
-  
-  <hr>
-  <a class="nav-link logout-link" (click)="logout()">Logout</a>
+  <a class="nav-link" routerLink="/admin/client" [routerLinkActive]="'active'">
+    <i class="material-icons">people</i> Client
+  </a>
+
+  <a class="nav-link" routerLink="/admin/users" [routerLinkActive]="'active'">
+    <i class="material-icons">person</i> Users
+  </a>
+
+  <a class="nav-link" routerLink="/admin/logs" [routerLinkActive]="'active'">
+    <i class="material-icons">history</i> Logs
+  </a>
 </div>

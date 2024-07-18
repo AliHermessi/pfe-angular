@@ -6,7 +6,10 @@
       <div class="card-container" (click)="onCardClick('Total Commande')">
         <div class="side-bar"></div>
         <div class="content">
-          <div class="title">Total Commande</div>
+          <div class="title">
+            <mat-icon>shopping_cart</mat-icon>
+            Commandes totales
+          </div>
           <div class="value">{{ totalValues.totalCommande }}</div>
         </div>
       </div>
@@ -16,7 +19,10 @@
       <div class="card-container" (click)="onCardClick('Total Facture')">
         <div class="side-bar"></div>
         <div class="content">
-          <div class="title">Total Facture</div>
+          <div class="title">
+            <mat-icon>receipt</mat-icon>
+            Factures totales
+          </div>
           <div class="value">{{ totalValues.totalFacture }}</div>
         </div>
       </div>
@@ -26,7 +32,10 @@
       <div class="card-container" (click)="onCardClick('Total Produits')">
         <div class="side-bar"></div>
         <div class="content">
-          <div class="title">Total Produits</div>
+          <div class="title">
+            <mat-icon>inventory</mat-icon>
+            Produits totaux
+          </div>
           <div class="value">{{ totalValues.totalProduits }}</div>
         </div>
       </div>
@@ -40,8 +49,15 @@
       <div class="card-container" (click)="onCardClick('Total Cost')">
         <div class="side-bar"></div>
         <div class="content">
-          <div class="title">Total Cost</div>
+          <div class="title">
+            <mat-icon>attach_money</mat-icon>
+            Coût total
+            
+          </div>
           <div class="value">{{ totalValues.totalCost }}</div>
+          <div *ngIf="totalValues.costChange !== undefined" class="percentage" [ngClass]="{'positive': totalValues.costChange > 0, 'negative': totalValues.costChange < 0}">
+            30 derniers jours {{ totalValues.costChange > 0 ? '+' : '' }}{{ totalValues.costChange }}%
+          </div>
         </div>
       </div>
     </div>
@@ -50,10 +66,13 @@
       <div class="card-container" (click)="onCardClick('Total Revenue')">
         <div class="side-bar"></div>
         <div class="content">
-          <div class="title">Total Revenue</div>
+          <div class="title">
+            <mat-icon>trending_up</mat-icon>
+            Revenu total
+          </div>
           <div class="value">{{ totalValues.totalRevenu }}</div>
           <div *ngIf="totalValues.percentageChange !== undefined" class="percentage" [ngClass]="{'positive': totalValues.percentageChange > 0, 'negative': totalValues.percentageChange < 0}">
-            {{ totalValues.percentageChange > 0 ? '+' : '' }}{{ totalValues.percentageChange }}%
+            30 derniers jours {{ totalValues.percentageChange > 0 ? '+' : '' }}{{ totalValues.percentageChange }}%
           </div>
         </div>
       </div>
@@ -63,8 +82,14 @@
       <div class="card-container" (click)="onCardClick('Total Sales')">
         <div class="side-bar"></div>
         <div class="content">
-          <div class="title">Total Sales</div>
+          <div class="title">
+            <mat-icon>shopping_bag</mat-icon>
+            Produits vendu
+          </div>
           <div class="value">{{ totalValues.totalSales }}</div>
+          <div *ngIf="totalValues.salesChange !== undefined" class="percentage" [ngClass]="{'positive': totalValues.salesChange > 0, 'negative': totalValues.salesChange < 0}">
+            30 derniers jours {{ totalValues.salesChange > 0 ? '+' : '' }}{{ totalValues.salesChange }}%
+          </div>
         </div>
       </div>
     </div>

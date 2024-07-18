@@ -1,62 +1,95 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+      <div class="col-md-10">
+          <!-- Alert -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-...your-sha384-here..." crossorigin="anonymous">
+          <h2>Commandes</h2>
+          <div class="input-group mt-3">
+            <input type="text" class="form-control" placeholder="Rechercher par code commande" aria-label="Rechercher par code commande" aria-describedby="button-addon2" [(ngModel)]="searchTerm">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="applySearch()">Rechercher</button>
+        </div>
+          <!-- Select Filter -->
+          <div class="form-group"  style="margin-bottom:40px;">
+              <label for="filterSelect">Filtrer par :</label>
+              <select class="form-control" id="filterSelect" [(ngModel)]="filterValue" (change)="applyFilterAndSort()">
+                  <option value="tous">Tous</option>
+                  <option value="Facture générer">Commande générée</option>
+                  <option value="facture non générer">Commande non générée</option>
+              </select>
+          </div>
 
-<div class="col-md-12 ml-3 mr-3 mt-4 d-flex align-items-center">
-    
-    <table class="table table-bordered table-hover table-striped mx-auto">
-  
-        <thead>
-            <tr>
-                <th (click)="changeSort('codeCommande')" [class.active]="sortColumn === 'codeCommande'" class="sortable">
-                    <u>Code Commande</u>
-                    <i class="fas" [ngClass]="getSortClass('codeCommande')"></i>
-                </th>
-                <th (click)="changeSort('dateCommande')" [class.active]="sortColumn === 'dateCommande'" class="sortable">
-                    <u> Date Commande</u>
-                    <i class="fas" [ngClass]="getSortClass('dateCommande')"></i>
-                </th>
-                <th (click)="changeSort('montantTotal')" [class.active]="sortColumn === 'montantTotal'" class="sortable">
-                    <u> Montant Total</u>
-                    <i class="fas" [ngClass]="getSortClass('montantTotal')"></i>
-                </th>
-                <th (click)="changeSort('adresse')" [class.active]="sortColumn === 'adresse'" class="sortable">
-                    <u> Address </u>
-                    <i class="fas" [ngClass]="getSortClass('adresse')"></i>
-                </th>
-                <th (click)="changeSort('type_commande')" [class.active]="sortColumn === 'type_commande'" class="sortable">
-                    <u> Type Commande</u>
-                    <i class="fas" [ngClass]="getSortClass('type_commande')"></i>
-                </th>
-                <th (click)="changeSort('fournisseurName')" [class.active]="sortColumn === 'fournisseurName'" class="sortable">
-                    <u> Fournisseur/Client</u>
-                    <i class="fas" [ngClass]="getSortClass('fournisseurName')"></i>
-                </th>
-            </tr>
-        </thead>
+          <!-- Table -->
+          <table class="table table-bordered" style="width: 100%; margin: auto;">
+              <thead class="thead-dark">
+                  <tr>
+                      <th>Code Commande</th>
+                      <th>Code Facture</th>
+                      <th>Date Commande</th>
+                      <th>Montant Total</th>
+                      <th>Type de Commande</th>
+                      <th>Expédié , En Attente</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let commande of filteredCommandes.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index">
+                      <td>{{ commande.codeCommande }}</td>
+                      <td>{{ commande.codeFacture }}</td>
+                      <td>{{ commande.dateCommande }}</td>
+                      <td>{{ commande.montantTotal }}</td>
+                      <td>{{ commande.type_commande }}</td>
+                      <td>
+                        <span *ngIf="commande.factureGenerated">
+                          <span *ngIf="commande.bdlisPrinted === true" [style.color]="'green'" style="font-weight: bold;">Expédiée</span>
+                          <span *ngIf="commande.bdlisPrinted === false" [style.color]="'orange'" style="font-weight: bold;">En attente</span>
+                        </span>
+                        <span *ngIf="commande.factureGenerated === false" [style.color]="'darkred'" style="font-weight: bold;">Facture non générée pour confirmer</span>
+                      </td>
+                      
+
+                      <td>
+                        <button class="btn btn-sm btn-success"
+                        (click)="ImprimerBDL(commande.id)"
+                        *ngIf="!commande.BDLisPrinted && commande.factureGenerated">
+                  Imprimer bon de livraison
+                </button>
+                
+                      </td>
+                  </tr>
+                  <tr *ngFor="let emptyRow of emptyRows; let i = index">
+                      <td>&nbsp;</td>                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+
+                  </tr>
+              </tbody>
+          </table>
+
+          <nav aria-label="Page navigation example" class="d-flex justify-content-center" style="margin-top:40px;">
+            <ul class="pagination">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" href="#" aria-label="Previous" (click)="previousPage()">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" *ngFor="let i of getPageNumbers(); let page = index">
+                    <a class="page-link" (click)="setCurrentPage(page + 1)">{{ page + 1 }}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" href="#" aria-label="Next" (click)="nextPage()">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
         
-            <tbody>
-                <tr *ngFor="let commande of commandes">
-                    <td>{{ commande.codeCommande }}</td>
-                    <td>{{ commande.dateCommande }}</td>
-                    <td>{{ commande.montantTotal }}</td>
-                    <td>{{ commande.adresse }}</td>
-                    <td>{{ commande.type_commande }}</td>
-                    <td *ngIf="commande.type_commande === 'IN'">{{ commande.fournisseurName }}</td>
-                    <td *ngIf="commande.type_commande !== 'IN'">{{ commande.clientName }}</td>
-                </tr>
-                <ng-container *ngIf="(pageSize - commandes.length) > 0">
-                    <tr *ngFor="let _ of getEmptyRows()">
-                        <td  >&nbsp;</td><td  >&nbsp;</td><td  >&nbsp;</td><td  >&nbsp;</td><td  >&nbsp;</td><td  >&nbsp;</td>
-                         
-                    </tr>
-                </ng-container>
-                  
-            </tbody>
-        </table>
-    </div>
 
-    <div class="d-flex justify-content-center mt-4">
-        <button class="btn btn-primary mr-2" [disabled]="currentPage === 1" (click)="prevPage()">Prev</button>
-        <button class="btn btn-primary ml-2" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-    </div>
+          <!-- Search -->
+          
 
+      </div>
+  </div>
+</div>

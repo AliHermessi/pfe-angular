@@ -28,6 +28,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  position: relative;
 }
 
 .card-container:hover {
@@ -39,18 +40,27 @@
   width: 5px;
   height: 100%;
   background-color: #5AA454;
-  margin-right: 15px;
-  border-radius: 5px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 5px 0 0 5px;
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   flex-grow: 1;
+  margin-left: 30px; /* Adjust margin to prevent overlap with the colored line */
 }
 
 .title {
   font-size: 18px;
   font-weight: bold;
   color: #333333;
+  display: flex;
+  align-items: center;
 }
 
 .value {
@@ -71,4 +81,10 @@
 
 .percentage.negative {
   color: red;
+}
+
+mat-icon {
+  font-size: 20px;
+  color: #757575;
+  margin-right: 12px;
 }

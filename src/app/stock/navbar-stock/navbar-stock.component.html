@@ -1,44 +1,51 @@
 <div class="top_navbar">
-  <div class="logo">Dashboard</div>
+  <div class="logo">APP</div>
   <div class="menu">
-    <div class="notifications">
-      <button class="notifications-btn" (click)="toggleNotifications()">
-        <i class="material-icons notifications-logo">notifications</i>
-        <span class="notifications-badge">{{ notifications.length }}</span> <!-- Display the number of notifications -->
-      </button>
-      <div class="notifications-dropdown" [ngClass]="{'show': showNotifications}">
-        <div class="notifications-header">Notifications</div>
-        <div class="notifications-list" [style.max-height]="showAllNotifications ? 'none' : '300px'">
-          <div class="notification" *ngFor="let notification of notifications">{{ notification.message }}</div> <!-- Display notifications -->
-        </div>
-        <button class="show-all-btn" (click)="showAllNotifications = true">Show All</button>
-      </div>
-    </div>
+    
     <a class="logout-link" (click)="logout()">
       <i class="material-icons logout-logo">logout</i>
     </a>
   </div>
 </div>
 
-
 <div class="sidebar">
-  <a class="nav-link"  routerLink="/stock/home-stock" routerLinkActive="active">Home</a>  
+  <a class="nav-link" routerLink="/stock/home-stock" routerLinkActive="active">
+    <i class="material-icons">home</i> Home
+  </a>  
 
-  <a class="nav-link" (click)="toggleNav('Produit')"  routerLinkActive="active">Produit</a>
+  <a class="nav-link" (click)="toggleNav('Produit')" routerLinkActive="active">
+    <i class="material-icons">category</i> Produit
+  </a>
   <div *ngIf="activeTab === 'Produit'">
-      <a class="sub-nav-link"  routerLink="/stock/ajout-stock" routerLinkActive="active">Ajouter Produits</a>
-      <a class="sub-nav-link"  routerLink="/stock/list-stock" routerLinkActive="active">Voir Liste de Produit</a>
+    <a class="sub-nav-link" routerLink="/stock/retourné" routerLinkActive="active">
+      <i class="material-icons">list</i> Voir Liste de Produit retourné
+    </a>
+    <a class="sub-nav-link" routerLink="/stock/ajout-stock" routerLinkActive="active">
+      <i class="material-icons">add_circle</i> Retourner produit
+    </a>
+    <a class="sub-nav-link" routerLink="/stock/list-stock" routerLinkActive="active">
+      <i class="material-icons">list</i> Voir Liste des Produit
+    </a>
+    
   </div>
 
-  <a class="nav-link" (click)="toggleNav('Commande')"  routerLinkActive="active">Commande</a>
+  <a class="nav-link" (click)="toggleNav('Commande')" routerLinkActive="active">
+    <i class="material-icons">assignment</i> Commande
+  </a>
   <div *ngIf="activeTab === 'Commande'">
-      <a class="sub-nav-link"  routerLink="/stock/commande-stock" routerLinkActive="active">Voir Liste de Commande</a>
-      <a class="sub-nav-link"  routerLink="/stock/add-commande" routerLinkActive="active">Creer Commande</a>
+    <a class="sub-nav-link" routerLink="/stock/commande-stock" routerLinkActive="active">
+      <i class="material-icons">view_list</i> Voir Liste de Commande
+    </a>
+   <!-- <a class="sub-nav-link" routerLink="/stock/add-commande" routerLinkActive="active">
+      <i class="material-icons">add_shopping_cart</i> Créer Commande
+    </a>-->
   </div>
 
-  <a class="nav-link"  routerLink="/stock/fournisseur" routerLinkActive="active">Fournisseur</a>
-  <a class="nav-link"  routerLink="/stock/categorie" routerLinkActive="active">Categorie</a>
-  <a class="nav-link"  routerLink="/stock/client" routerLinkActive="active">Client</a>
+  <a class="nav-link" routerLink="/stock/fournisseur" routerLinkActive="active">
+    <i class="material-icons">local_shipping</i> Fournisseur
+  </a>
+  <a class="nav-link" routerLink="/stock/categorie" routerLinkActive="active">
+    <i class="material-icons">layers</i> Categorie
+  </a>
   
-
 </div>

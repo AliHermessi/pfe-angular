@@ -1,0 +1,80 @@
+<div class="container">
+    <h1 class="text-center">Liste des produits retourné / Endommagé</h1>
+
+    <!-- Search input -->
+    <input type="text" class="form-control mb-3" placeholder="Search..." [(ngModel)]="searchValue" (input)="search()">
+
+    <!-- Table to display processed logs -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Commande ID</th>
+                <th>ID elementCommande</th>
+
+                <th>Produit Libelle</th>
+                <th>Produit Barcode</th>
+                
+                <th>Description</th>
+                <th>Status</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Displayed logs -->
+                <tr *ngFor="let log of displayedLogs; let i = index">
+                    <td>{{ log.commandeId }}</td>
+                    <td>{{ log.elementFactureId }}</td>
+
+                    <td>{{ log.produitLibelle }}</td>
+                    <td>{{ log.produitBarcode }}</td>
+                    
+                    <td>{{ log.description }}</td>
+                    <td>{{ log.status }}</td>
+                    <td>{{ log.quantity }}</td>
+                    <td>
+                        <button class="btn btn-danger" (click)="confirmDeletion(log)">Supprimer</button>
+                    </td>
+                </tr>
+            <!-- Empty rows -->
+            <ng-container *ngIf="(pageSize - processedLogs.length) > 0">
+                <tr *ngFor="let _ of getEmptyRows()">
+                    <td>&nbsp;</td>                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+    <!-- Pagination buttons -->
+    <nav aria-label="Page navigation example" class="d-flex justify-content-center" style="margin-top:40px;">
+        <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" href="#" aria-label="Previous" (click)="prevPage()">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" *ngFor="let i of getPageNumbers(); let page = index">
+                <a class="page-link" (click)="setCurrentPage(page + 1)">{{ page + 1 }}</a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <a class="page-link" href="#" aria-label="Next" (click)="nextPage()">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Template for no logs -->
+    <ng-template #noLogsTemplate>
+        <div class="alert alert-warning mt-3" role="alert">
+            pas de logs trouvés.
+        </div>
+    </ng-template>
+</div>

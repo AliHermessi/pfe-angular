@@ -1,18 +1,31 @@
-<div>
-  <label for="product">Product:</label>
-  <select id="product" [(ngModel)]="selectedProductId">
-    <option *ngFor="let product of products" [value]="product.id">{{ product.libelle }}</option>
-  </select>
+<div class="container">
+  <div class="search-bar mt-4">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="product-label">Libelle produit:</span>
+      </div>
+      <select id="product" class="form-select" [(ngModel)]="selectedProductId">
+        <option *ngFor="let product of products" [value]="product.id">{{ product.libelle }}</option>
+      </select>
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="start-label">Date de début:</span>
+      </div>
+      <input type="date" id="start" class="form-control" [(ngModel)]="startDate">
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="end-label">Date de fin:</span>
+      </div>
+      <input type="date" id="end" class="form-control" [(ngModel)]="endDate">
+    </div>
+    <button class="btn btn-primary" (click)="updateChart()">Refresher</button>
+  </div>
 
-  <label for="start">Start date:</label>
-  <input type="date" id="start" [(ngModel)]="startDate">
-
-  <label for="end">End date:</label>
-  <input type="date" id="end" [(ngModel)]="endDate">
-
-  <button (click)="updateChart()">Update Chart</button>
-</div>
-
-<div *ngIf="chartData">
-  <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+  <div class="chart-container mt-4">
+    <div *ngIf="chartData">
+      <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+    </div>
+  </div>
 </div>

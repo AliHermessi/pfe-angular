@@ -4,39 +4,65 @@
       <!-- Alert -->
       
       <h2>Commandes</h2>
-      <table class="table table-striped">
+
+      <!-- Select Filter -->
+      <div class="form-group">
+        <label for="filterSelect">Filtrer par :</label>
+        <select class="form-control" id="filterSelect" [(ngModel)]="filterValue" (change)="applyFilterAndSort()">
+          <option value="tous">Tous</option>
+          <option value="Facture générer">Commande générée</option>
+          <option value="facture non générer">Commande non générée</option>
+        </select>
+      </div>
+
+      <!-- Table -->
+      <table class="table table-striped table-bordered">
         <thead class="thead-dark">
           <tr>
             <th>Code Commande</th>
             <th>Code Facture</th>
             <th>Date Commande</th>
             <th>Montant Total</th>
-            <th>Type Commande</th>
-            <th>Actions</th>
+            <th>Type de Commande</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let commande of commandes.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index" >
+          <tr *ngFor="let commande of filteredCommandes.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index">
             <td>{{ commande.codeCommande }}</td>
             <td>{{ commande.codeFacture }}</td>
             <td>{{ commande.dateCommande }}</td>
             <td>{{ commande.montantTotal }}</td>
             <td>{{ commande.type_commande }}</td>
             <td>
-              <button class="btn btn-sm btn-primary" (click)="openCommande(commande.id)">
-                v<i class="fa-solid fa-eye"></i>
-              </button>
-              <button class="btn btn-sm btn-success" (click)="convertirCommandeEtCreerFacture(commande.id)" *ngIf="!commande.factureGenerated">
-                g             </button>
-              <button class="btn btn-sm btn-danger" (click)="deleteCommande(commande.id)" [disabled]="commande.factureGenerated">
-                d<i class="fa-solid fa-trash"></i>              </button>
+              <ng-container *ngIf="!commande.factureGenerated; else factureGeneratedText">
+                <button class="btn btn-sm btn-primary" (click)="modifierCommande(commande.id)">
+                  Modifier <i class="fa-solid fa-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-success" (click)="convertirCommandeEtCreerFacture(commande.id)">
+                  Générer facture
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteCommande(commande.id)">
+                  Supprimer <i class="fa-solid fa-trash"></i>
+                </button>
+              </ng-container>
+              <ng-template #factureGeneratedText>
+               
+                <span class="text-success fw-bold">Facture généré</span>
+                <button class="btn btn-sm btn-success" (click)="deleteCommande(commande.id)">
+                  Imprimer <i class="fa-solid fa-trash"></i>
+                </button>
+              </ng-template>
             </td>
           </tr>
           <tr *ngFor="let emptyRow of emptyRows; let i = index">
-            <td colspan="6">&laquo;</td>
+            <td colspan="6">&nbsp;</td>
           </tr>
         </tbody>
       </table>
+      
+
+      <!-- Pagination -->
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item" [class.disabled]="currentPage === 1">
@@ -54,8 +80,13 @@
           </li>
         </ul>
       </nav>
+
+      <!-- Search -->
       <div class="input-group mt-3">
-        <input type="text" class="form-control" placeholder="Search by facture code" aria-label="Search by facture code" aria-describedby="button-addon2" [(ngModel)]="searchTerm">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="applySearch()">Apply</button>
+        <input type="text" class="form-control" placeholder="Rechercher par code commande" aria-label="Rechercher par code commande" aria-describedby="button-addon2" [(ngModel)]="searchTerm">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="applySearch()">Rechercher</button>
       </div>
+
+    </div>
+  </div>
 </div>

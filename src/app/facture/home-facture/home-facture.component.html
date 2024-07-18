@@ -1,1 +1,24 @@
-<p>home-facture works!</p>
+<div class="container">
+    <h1 class="title">Bienvenue, {{ username }}</h1>
+    
+    <div class="card-container">
+      <div class="card" (click)="onCardClick('factures')">
+        <i class="material-icons">receipt</i>
+        <h2>Factures</h2>
+        <p>Nombre de factures : {{ factures.length }}</p>
+      </div>
+  
+      <div class="card" (click)="onCardClick('commandes')">
+        <i class="material-icons">receipt</i> 
+        <h2>Commandes</h2>
+        <p>Nombre de commandes : {{ commandes.length }}</p>
+      </div>
+  
+      <div class="card" (click)="onCardClick('clients')">
+        <i class="material-icons">person</i>
+                <h2>Clients</h2>
+        <p>Nombre de clients : {{ clients.length }}</p>
+      </div>
+    </div>
+  </div>
+  

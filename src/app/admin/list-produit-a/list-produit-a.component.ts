@@ -246,7 +246,7 @@ updateTotalpage(number:number) : void {
   
   creerCommande(): void {
     this.sharedService.setSelectedProduits(this.selectedProduits);
-    this.router.navigate(['/admin/add-commande-f']); // Navigate to the add-commande-f page
+    this.router.navigate(['/admin/add-commande-f','list-produit']); // Navigate to the add-commande-f page
   }
 
 removeSelectedProduit(selectedProduit: any): void {

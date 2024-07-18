@@ -13,28 +13,39 @@ export class ComboChartComponent implements OnInit {
   error: string | null = null;
   view: [number, number] = [700, 400]; // Adjust the size as needed
 
+  startDate!: string;
+  endDate!: string;
+  prevStartDate!: string;
+  prevEndDate!: string;
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    this.calculateDateRanges();
     this.getTotalInfo();
   }
 
-  getTotalInfo(): void {
+  calculateDateRanges(): void {
     const now = new Date();
-    const startDate = format(startOfMonth(now), 'yyyy-MM-dd\'T\'HH:mm:ss');
-    const endDate = format(endOfMonth(now), 'yyyy-MM-dd\'T\'HH:mm:ss');
-    const prevStartDate = format(startOfMonth(subMonths(now, 1)), 'yyyy-MM-dd\'T\'HH:mm:ss');
-    const prevEndDate = format(endOfMonth(subMonths(now, 1)), 'yyyy-MM-dd\'T\'HH:mm:ss');
+    this.startDate = format(startOfMonth(now), "yyyy-MM-dd'T'00:00:00");
+    this.endDate = format(endOfMonth(now), "yyyy-MM-dd'T'23:59:59");
+    const previousMonth = subMonths(now, 1);
+    this.prevStartDate = format(startOfMonth(previousMonth), "yyyy-MM-dd'T'00:00:00");
+    this.prevEndDate = format(endOfMonth(previousMonth), "yyyy-MM-dd'T'23:59:59");
+  }
 
+  getTotalInfo(): void {
     const params = new HttpParams()
-      .set('startDate', startDate)
-      .set('endDate', endDate);
+      .set('startDate', this.startDate)
+      .set('endDate', this.endDate);
 
-    this.http.get<any>('http://localhost:8083/dashboard/TotalValues')
+    this.http.get<any>('http://localhost:8083/dashboard/TotalValues', { params })
       .subscribe(
         data => {
           this.totalValues = data;
-          this.getRevenuePercentageChange(startDate, endDate, prevStartDate, prevEndDate);
+          console.log(data);
+          this.getRevenuePercentageChange();
+
         },
         error => {
           this.error = 'Failed to fetch total values';
@@ -43,25 +54,29 @@ export class ComboChartComponent implements OnInit {
       );
   }
 
-  getRevenuePercentageChange(start1: string, end1: string, start2: string, end2: string): void {
-    const params = new HttpParams()
-      .set('start1', start1)
-      .set('end1', end1)
-      .set('start2', start2)
-      .set('end2', end2);
-  
-    this.http.get<number>('http://localhost:8083/dashboard/pourcentagePVE', { params })
+  getRevenuePercentageChange(): void {
+    this.http.get<any>('http://localhost:8083/dashboard/pourcentagePVE')
       .subscribe(
-        percentageChange => {
-          this.totalValues.percentageChange = percentageChange;
+        response => {
+          console.log(response);
+          // Round the response values to two decimal places
+          this.totalValues.percentageChange = -(parseFloat(response.growthPercentage.toFixed(2)));
+          this.totalValues.costChange = -(parseFloat(response.costPercentage.toFixed(2)));
+          this.totalValues.salesChange = -(parseFloat(response.salesPercentage.toFixed(2)));
+
+
+
+          console.log('Percentage change:', this.totalValues.percentageChange);
+          console.log('Cost change:', this.totalValues.costChange);
+          console.log('Sales change:', this.totalValues.salesChange);
         },
         error => {
           this.error = 'Failed to fetch percentage change';
-          console.log(error);
+          console.error('Error fetching percentage change:', error);
         }
       );
   }
-  
+
   
 
   onCardClick(cardName: string): void {

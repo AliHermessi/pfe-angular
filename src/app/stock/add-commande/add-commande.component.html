@@ -40,14 +40,10 @@
         <div *ngIf="typeCommande === 'IN'">
           
             <label for="fournisseur">Fournisseur</label>
-          
+          <br>
           <div class="form-group">
             <label for="fournisseurNom">Nom</label>
             <input type="text" class="form-control" id="fournisseurNom" [value]="fournisseurNom" [(ngModel)]="fournisseurNom"  [readonly]="!isFournisseurSelected">
-          </div>
-          <div class="form-group">
-            <label for="fournisseurAdresse">Adresse</label>
-            <input type="text" class="form-control" id="fournisseurAdresse" [(ngModel)]="fournisseurAdresse" [readonly]="!isFournisseurSelected">
           </div>
           <div class="form-group">
             <label for="fournisseurNumero">Numéro</label>
@@ -63,10 +59,7 @@
             <label for="clientNom">Nom</label>
             <input type="text" class="form-control" id="clientNom" [value]="clientNom" [(ngModel)]="clientNom" [readonly]="!isClientSelected">
           </div>
-          <div class="form-group">
-            <label for="clientAdresse">Adresse</label>
-            <input type="text" class="form-control" id="clientAdresse" [(ngModel)]="clientAdresse" [readonly]="!isClientSelected">
-          </div>
+
           <div class="form-group">
             <label for="clientNumero">Numéro Téléphone</label>
             <input type="text" class="form-control" id="clientNumero" [(ngModel)]="clientNumero" [readonly]="!isClientSelected">
@@ -92,7 +85,7 @@
             <td><input type="text" class="form-control" [(ngModel)]="elementFacture.refProduit" readonly></td>
             <td><input type="text" class="form-control" [(ngModel)]="elementFacture.libelle" readonly></td>
             <td>
-              <input type="number" class="form-control" [(ngModel)]="elementFacture.quantity" readonly >
+              <input type="number" class="form-control" [(ngModel)]="elementFacture.quantity" readonly>
             </td>
             
           </tr>

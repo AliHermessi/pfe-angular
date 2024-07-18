@@ -51,6 +51,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessagingComponent } from './messaging/messaging.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { ReturnComponent } from './stock/return/return.component';
+
+
 //const config: SocketIoConfig = { url: 'http://localhost:8083', options: {} };
 //SocketIoModule.forRoot(config)
 
@@ -65,7 +70,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
     ListStockComponent,
     CommandeStockComponent,
     NavbarStockComponent,
-   
+    ReturnComponent,
     AjoutStockComponent,
     AddCommandeComponent,
     FournisseurPageComponent,
@@ -107,7 +112,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
     MatSelectModule,NgSelectModule,NgxChartsModule, 
     ChartModule,
     ButtonModule,BrowserAnimationsModule,
-    MatDialogModule,
+    MatDialogModule,ReactiveFormsModule
     
 
   ],

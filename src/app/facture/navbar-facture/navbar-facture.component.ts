@@ -8,7 +8,7 @@ import { SessionStorageService } from 'ngx-webstorage';
   styleUrls: ['./navbar-facture.component.css']
 })
 export class NavbarFactureComponent {
-  @Input() activeTabFacture: string = 'Dashboard';
+  @Input() activeTabFacture: string = 'home-facture';
   @Output() activeTabChange = new EventEmitter<string>();
 
   showNotifications: boolean = false;

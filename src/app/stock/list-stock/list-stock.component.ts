@@ -48,9 +48,10 @@ selectedProduits:any [] = [] ;
   }
 
   toggleArrow(): void {
-    this.isArrowUp =!this.isArrowUp;
-    this.showFilters =!this.showFilters;
+    this.isArrowUp = !this.isArrowUp;
+    this.showFilters = !this.showFilters;
   }
+  
 
   fetchProduits(): void {
     const start = (this.currentPage - 1) * this.pageSize;
@@ -156,7 +157,14 @@ updateTotalpage(number:number) : void {
       this.fetchProduits();
     }
   }
-
+  getPageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+  setCurrentPage(page: number): void {
+    this.currentPage = page;
+    this.fetchProduits(); // Make sure to fetch products for the new page
+  }
+  
   clearFilters(): void {
     this.searchValue = '';
     this.currentPage = 1;

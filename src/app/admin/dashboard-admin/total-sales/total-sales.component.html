@@ -1,18 +1,26 @@
 <div class="total">
-   <div class="button-group">
-     <button class="button" (click)="showLastDay()">Semaine dernier</button>
-     <button class="button" (click)="showLastMonth()">Mois dernier</button>
-     <button class="button" (click)="showLastYear()">Année dernier</button>
-   </div>
- 
-   <div class="chart-container">
-     <div class="chart" style="width: 66.666%; float: left;">
-       <p-chart type="line" [data]="chartData" [options]="comboChartOptions"></p-chart>
-     </div>
- 
-     <div class="chart" style="width: 33.333%; float: right;">
-       <p-chart type="pie" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
-     </div>
-   </div>
- </div>
- 
+  <div class="button-group">
+    <button class="button" (click)="showLastDay()">Semaine dernier</button>
+    <button class="button" (click)="showLastMonth()">Mois dernier</button>
+    <button class="button" (click)="showLastYear()">Année dernier</button>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart" style="width: 66.666%; float: left;">
+      <p-chart type="line" [data]="chartData" [options]="comboChartOptions"></p-chart>
+    </div>
+
+    <div class="chart" style="width: 33.333%; float: right;">
+      <div class="button-group">
+        <button class="button" (click)="switchChart('doughnut1')">Top Produits</button>
+        <button class="button" (click)="switchChart('doughnut2')">Valeurs Totales</button>
+      </div>
+      <div *ngIf="activeChart === 'doughnut1'">
+        <p-chart type="doughnut" [data]="doughnutChartData1" [options]="doughnutChartOptions"></p-chart>
+      </div>
+      <div *ngIf="activeChart === 'doughnut2'">
+        <p-chart type="doughnut" [data]="doughnutChartData2" [options]="doughnutChartOptions"></p-chart>
+      </div>
+    </div>
+  </div>
+</div>

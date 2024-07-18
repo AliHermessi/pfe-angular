@@ -74,12 +74,6 @@ processSelectedProduits(produits: any[]): void {
 
 }
   
-
-  
-
-  
-  
-
   searchByCodeCommande(selectedCodeCommande: string): void {
     if (selectedCodeCommande.length >= 1) {
       this.http.post<any[]>('http://localhost:8083/commandes/search', selectedCodeCommande)
@@ -89,10 +83,25 @@ processSelectedProduits(produits: any[]): void {
           this.codeCommandeList = this.commandes.map(commande => commande.codeCommande);
           console.log(this.commandes);
 
-          // Update the commande property with the fetched data
           if (this.commandes.length > 0) {
+            
             this.commande = this.commandes[0];
-            this.updateElementFactures(); // Update ListelementFactures
+            this.selectedCodeCommande = this.commande.codeCommande;
+            console.log(this.commande);
+            this.typeCommande = this.commande.type_commande;
+            
+            this.updateElementFactures(); 
+            
+            this.adresse = this.commande.adresse;
+            this.dateCommande = this.commande.dateCommande;
+            if (this.commande.type_commande === 'IN'){
+             this.fournisseurNom = this.commande.fournisseurName
+             this.fournisseurNumero = this.commande.numero
+            }else if (this.commande.type_commande === 'OUT'){
+              this.clientNom = this.commande.fournisseurName
+             this.clientNumero = this.commande.numero
+            }
+            console.log(this.commande);          
           }
         });
     }
@@ -105,9 +114,7 @@ processSelectedProduits(produits: any[]): void {
     this.ListelementFactures = []; // Clear existing data
     this.commande.elementsFacture.forEach((elementFacture: ElementFacture) => {
       this.addNewItem(elementFacture);
-      console.log(elementFacture);
     });
-    console.log(this.ListelementFactures);
   }
 
   toggleDropdown(event: Event) {
@@ -122,9 +129,17 @@ processSelectedProduits(produits: any[]): void {
 
   selectOption(option: string) {
     this.selectedCodeCommande = option;
-    this.updateElementFactures();
+    for (let i = 0; i < this.commandes.length; i++) {
+      if (this.commandes[i].codeCommande === option) {
+        this.commande = this.commandes[i];
+        break; 
+      }
+    }
     this.closeDropdown();
+    this.updateElementFactures();
+    
   }
+  
 
 
 
@@ -138,24 +153,9 @@ processSelectedProduits(produits: any[]): void {
   }
   
   
-  
-  
-
   deleteProduit(index: number): void {
     this.produitsList.splice(index, 1);
   }
-
-
-
- 
-
-
-  
- 
-
-  
-
-
 
   enableFournisseurFields(): void {
     this.isFournisseurSelected = true;

@@ -12,23 +12,24 @@ export class HomeStockComponent {
   produits: any[] = [];
   categories:any [] = [];
   fournisseurs:any[] = [] ;
-  currentPage: number=1;
-  totalPages: number=1;
-  pageSize: number=7;
-  libelle: string = '';
-  description: string = '';
-  prix: number = 0;
-  quantite: number = 0;
-  date_arrivage: string = '';
-  categorieIDn: number = 0;
-  fournisseurIDn: number = 0;
-  status:String='';
-  cout:number=0;
-  brand:String='';
+  username:String|null='';
+
   ngOnInit(): void {
     this.fetchProduits();
-  }
+    this.fetchCategories();
+    this.fetchFournisseurs();
+    this.username = sessionStorage.getItem('ngx-webstorage|username');
 
+  }
+  onCardClick(type: string): void {
+    if (type === 'produits') {
+      this.router.navigate(['/stock/list-stock']);
+    } else if (type === 'categories') {
+      this.router.navigate(['/stock/categorie']);
+    } else if (type === 'fournisseurs') {
+      this.router.navigate(['/stock/fournisseur']);
+    }
+  }
   fetchProduits(): void {
     this.http.get<any[]>('http://localhost:8083/produits/getAll')
       .subscribe(

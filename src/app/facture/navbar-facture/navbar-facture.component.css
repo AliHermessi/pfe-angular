@@ -94,16 +94,6 @@
   cursor: pointer;
 }
 
-.logout-link {
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  color: white;
-  text-decoration: none;
-  border-left: 1px solid #f5f5f5;
-  margin-left: 20px;
-}
-
 .logout-logo {
   color: white;
 }
@@ -175,7 +165,7 @@
   color: #FFFFFF;
   position: relative; /* Added */
   border-bottom: 0.5px solid #78A1BB;
-   /* Change border bottom to light gray */
+  cursor: pointer; /* Add cursor pointer for all sidebar links */
 }
 
 .sidebar a:hover {
@@ -185,7 +175,8 @@
 .sidebar .sub-nav-link {
   padding-left: 30px; /* Increase padding for sub-links */
   color: rgb(0, 0, 0); 
- background-color: lightgray;
+  background-color: lightgray;
+  cursor: pointer; /* Ensure cursor is pointer for sub-links */
 }
 
 .sidebar .active {
@@ -196,4 +187,14 @@
 
 .notifications-logo {
   color: white;
+}
+
+.material-icons.dropdown-arrow {
+  transition: transform 0.3s;
+  vertical-align: middle;
+  cursor: pointer; /* Ensure cursor is pointer for dropdown arrow */
+}
+
+.material-icons.dropdown-arrow.open {
+  transform: rotate(180deg);
 }

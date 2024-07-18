@@ -66,35 +66,68 @@ export class AddProduitAdminComponent {
 
   addProduit(): void {
     const produit = {
-      libelle: this.libelle,
-      description: this.description,
-      prix: this.prix,
-      cout:this.cout,
-      quantite: this.quantite,
-      date_arrivage: this.date_arrivage,
-      categorieId:  this.categorieIDn,
-      fournisseurId: this.fournisseurIDn,
-      minStock: this.minStock,
-      maxStock: this.maxStock,
-      tax: this.taxe,
-      status:this.status,
-      brand:this.brand
+        libelle: this.libelle,
+        description: this.description,
+        prix: this.prix,
+        cout: this.cout,
+        quantite: this.quantite,
+        date_arrivage: this.date_arrivage,
+        categorieId: this.categorieIDn,
+        fournisseurId: this.fournisseurIDn,
+        minStock: this.minStock,
+        maxStock: this.maxStock,
+        tax: this.taxe,
+        status: this.status,
+        brand: this.brand
     };
 
-    this.http.post<any>('http://localhost:8083/produits/add', produit)
-      .subscribe(
-        response => {
-          console.log(produit);
-          setTimeout(() => {
-            this.showAlert = false;
-          }, 5000); // Hide alert after 5 seconds
-          this.resetFields();
-        },
-        error => {
-          console.error('Error adding produit:', error);
+    Swal.fire({
+        title: 'Confirmer l\'ajout du produit',
+        html: `
+            <p><strong>Libellé:</strong> ${produit.libelle}</p>
+            <p><strong>Description:</strong> ${produit.description}</p>
+            <p><strong>Prix:</strong> ${produit.prix}</p>
+            <p><strong>Coût:</strong> ${produit.cout}</p>
+            <p><strong>Quantité:</strong> ${produit.quantite}</p>
+            <p><strong>Date d'arrivage:</strong> ${produit.date_arrivage}</p>
+            <p><strong>ID Catégorie:</strong> ${produit.categorieId}</p>
+            <p><strong>ID Fournisseur:</strong> ${produit.fournisseurId}</p>
+            <p><strong>Stock Min:</strong> ${produit.minStock}</p>
+            <p><strong>Stock Max:</strong> ${produit.maxStock}</p>
+            <p><strong>Taxe:</strong> ${produit.tax}</p>
+            <p><strong>Statut:</strong> ${produit.status}</p>
+            <p><strong>Marque:</strong> ${produit.brand}</p>
+        `,
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmer',
+        cancelButtonText: 'Annuler'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.http.post<any>('http://localhost:8083/produits/add', produit)
+                .subscribe(
+                    response => {
+                        console.log(produit);
+                        Swal.fire(
+                            'Succès!',
+                            'Le produit a été ajouté avec succès.',
+                            'success'
+                        );
+                        this.resetFields();
+                    },
+                    error => {
+                        console.error('Erreur lors de l\'ajout du produit:', error);
+                        Swal.fire(
+                            'Erreur!',
+                            'Une erreur s\'est produite lors de l\'ajout du produit.',
+                            'error'
+                        );
+                    }
+                );
         }
-      );
-  }
+    });
+}
+
 
   resetFields(): void {
     this.libelle = '';

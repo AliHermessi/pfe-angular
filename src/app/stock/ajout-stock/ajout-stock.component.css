@@ -37,10 +37,9 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
     z-index: 1000;
 }
-.label {
+.label-cs {
     font-weight: bold;
     font-size: large; /* Make the text bold */
-    color: rgb(49, 71, 209); /* Set the text color */
     margin-bottom: 5px; /* Add bottom margin for spacing */
 }
 
@@ -82,5 +81,8 @@
     padding: 20px; /* Add padding inside the container */
     border: 1px solid #ccc; /* Add a border */
     background-color: white; /* Set the background color to white */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow with spread, blur, and color */
 }
+
 
